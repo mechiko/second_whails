@@ -11,6 +11,7 @@ func (t *page) Routes() error {
 	base := "/" + t.modelType.String()
 	t.Echo().GET(base, t.Index)
 	t.Echo().GET(base+"/reset", t.Reset)
+	t.Echo().GET(base+"/balance", t.Balance)
 	return nil
 }
 
@@ -32,6 +33,18 @@ func (t *page) Reset(c echo.Context) error {
 		return t.ServerError(c, err)
 	}
 	if err := c.Render(http.StatusOK, t.Name(), t.RenderPageModel("index", data)); err != nil {
+		return t.ServerError(c, err)
+	}
+	return nil
+}
+
+func (t *page) Balance(c echo.Context) error {
+	data, err := t.PageData()
+	if err != nil {
+		return t.ServerError(c, err)
+	}
+	t.balance()
+	if err := c.Render(http.StatusOK, t.Name(), t.RenderPageModel("balance", data)); err != nil {
 		return t.ServerError(c, err)
 	}
 	return nil

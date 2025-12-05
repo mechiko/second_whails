@@ -7,8 +7,9 @@ import (
 )
 
 type MoneyModel struct {
-	model domain.Model
-	Title string
+	model   domain.Model
+	Title   string
+	Balance *domain.Balance
 }
 
 var _ domain.Modeler = (*MoneyModel)(nil)
@@ -16,8 +17,9 @@ var _ domain.Modeler = (*MoneyModel)(nil)
 // создаем модель считываем ее состояние и возвращаем указатель
 func NewModel(app domain.Apper) (*MoneyModel, error) {
 	model := &MoneyModel{
-		model: domain.Money,
-		Title: "Информация по ИНН",
+		model:   domain.Money,
+		Title:   "Информация по ИНН",
+		Balance: &domain.Balance{},
 	}
 	if err := model.ReadState(app); err != nil {
 		return nil, fmt.Errorf("model %v read state %w", model.model, err)
