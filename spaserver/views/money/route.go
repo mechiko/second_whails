@@ -39,11 +39,11 @@ func (t *page) Reset(c echo.Context) error {
 }
 
 func (t *page) Balance(c echo.Context) error {
+	t.balance()
 	data, err := t.PageData()
 	if err != nil {
 		return t.ServerError(c, err)
 	}
-	t.balance()
 	if err := c.Render(http.StatusOK, t.Name(), t.RenderPageModel("balance", data)); err != nil {
 		return t.ServerError(c, err)
 	}

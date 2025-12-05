@@ -1,3 +1,29 @@
 <div class="w-full">
-  <div>баланс такой то</div>
+  <div class="m-1 p-2 bg-white shadow-lg rounded">
+    <span class="p-1 font-bold text-gray-700">Распределение КМ по статусам</span>
+    <table class="table-auto w-2/3 ml-2 mt-1">
+      <col style="width:40%">
+      <col style="width:40%">
+      <col style="width:20%">
+      <col />
+      <thead style="font-size: 12px;">
+        <tr>
+          <th>Товарная группа</th>
+          <th>Баланс</th>
+          <th>ID организации</th>
+          <th>ID контракта</th>
+        </tr>
+      </thead>
+      <tbody>
+{{range $i, $b := $.Balance}}
+      <tr class="text-base">
+        <td class="pl-1 border">{{groupByIDs $b.ProductGroupID}}</td>
+        <td class="pl-1 border">{{$b.Balance}}</td>
+        <td class="text-base pl-1 border"></td>
+        <td class="text-base pl-1 border"></td>
+      </tr>
+{{end}}
+      </tbody>
+    </table>
+  </div>
 </div>

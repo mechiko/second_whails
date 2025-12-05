@@ -2,6 +2,7 @@ package templates
 
 import (
 	"html/template"
+	"korrectkm/domain"
 	"path/filepath"
 	"time"
 )
@@ -56,5 +57,12 @@ var functions = template.FuncMap{
 			return ""
 		}
 		return filepath.Base(t)
+	},
+	"groupByID": func(id int) string {
+		m := domain.ProductGroupByID()
+		return m[id].Name
+	},
+	"groupByIDs": func(id int) string {
+		return domain.ProductGroupByIDs[id].Name
 	},
 }
