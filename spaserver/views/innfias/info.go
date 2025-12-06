@@ -1,4 +1,4 @@
-package cisinfo
+package innfias
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func (t *page) balance() error {
+func (t *page) info() error {
 	data, err := t.PageModel()
 	if err != nil {
 		return fmt.Errorf("%w", err)
@@ -22,8 +22,9 @@ func (t *page) balance() error {
 	if err != nil {
 		return fmt.Errorf("%w", err)
 	}
-	data.Balance = &domain.Balance{}
-	if err := tc.Balance(data.Balance, 0); err != nil {
+
+	data.InnInfo = &domain.ModFiasInfo{}
+	if err := tc.ModsList(data.InnInfo, []string{"7811755774"}); err != nil {
 		return fmt.Errorf("%w", err)
 	}
 	data.Updated = time.Now()

@@ -1,13 +1,15 @@
-<div id="page" class="w-full">
-  <div>Иноформация по балансу</div>
-  <div class="px-2 pb-2 pt-2 flex gap-4 bg-white text-base shadow-lg">
-    <button
-      class="focus:shadow-outline rounded-md border-2 border-gray-500 px-1 py-0.5 font-medium text-gray-900 hover:bg-gray-700 hover:text-white focus:outline-none"
-      hx-indicator="#ind1" hx-get="/money/balance" hx-trigger="click" hx-target="#balance" hx-swap="innerHTML">
-      Получить Баланс
-    </button>
-  </div>
-  <div id="balance">
+<div class="w-full">
+  <div>Иноформация по ИНН</div>
+  <form class="p-0 m-1" hx-get='/innfias/info' hx-target="#inninfo" hx-swap="innerHTML">
+    <input value="" 
+      class="text-sm border border-gray-300 rounded-sm py-1 px-1 focus:border-blue-500 focus:outline-none" 
+      type="text" placeholder="ИНН" name='inn'
+    />
+    <input id="sbmtOrder" type="submit" value="Запросить" 
+      class="border-2 border-gray-500 hover:bg-gray-700 text-gray-700 hover:text-white py-0.5 px-1 rounded focus:outline-none focus:shadow-outline"
+    />
+  </form>
+  <div id="inninfo">
     {{ template "info" . }}
   </div>
 </div>

@@ -14,12 +14,14 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/mechiko/walk"
 )
 
 // маршрутизация приложения
 func (s *Server) Routes() http.Handler {
 	s.loadViews()
-	s.server.GET("/", s.Index)           // переход/загрузка на текущую страницу
+	s.server.GET("/", s.Index)
+	s.server.GET("/copy/:value", s.copy) // переход/загрузка на текущую страницу
 	s.server.GET("/page", s.Page)        // переход/загрузка на текущую страницу
 	s.server.GET("/page/reset", s.Reset) // переход/загрузка на текущую страницу
 	s.server.GET("/sse", s.Sse)
@@ -102,4 +104,12 @@ func (s *Server) Index(c echo.Context) error {
 		return s.ServerError(c, err)
 	}
 	return nil
+}
+
+func (s *Server) copy(c echo.Context) error {
+	value := c.Param("value")
+	walk.Clipboard().SetText(value)
+	// s.SetFlush("инфо", fmt.Sprintf("значение %s скопировано", value))
+	s.SetFlush("скопировано в буфер значение "+value, "info")
+	return c.String(200, "")
 }

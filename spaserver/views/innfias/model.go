@@ -4,11 +4,14 @@ import (
 	"fmt"
 	"korrectkm/domain"
 	"korrectkm/reductor"
+	"time"
 )
 
 type InnFiasModel struct {
-	model domain.Model
-	Title string
+	model   domain.Model
+	Title   string
+	InnInfo *domain.ModFiasInfo
+	Updated time.Time
 }
 
 var _ domain.Modeler = (*InnFiasModel)(nil)
@@ -16,8 +19,9 @@ var _ domain.Modeler = (*InnFiasModel)(nil)
 // создаем модель считываем ее состояние и возвращаем указатель
 func NewModel(app domain.Apper) (*InnFiasModel, error) {
 	model := &InnFiasModel{
-		model: domain.InnFias,
-		Title: "Информация по ИНН",
+		model:   domain.InnFias,
+		Title:   "Информация по ИНН",
+		Updated: time.Time{},
 	}
 	if err := model.ReadState(app); err != nil {
 		return nil, fmt.Errorf("model %v read state %w", model.model, err)
