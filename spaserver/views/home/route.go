@@ -18,10 +18,13 @@ func (t *page) Routes() error {
 }
 
 func (t *page) Index(c echo.Context) error {
-	if err := c.Render(http.StatusOK, t.Name(), t.RenderPageModel("index", t.PageModel())); err != nil {
+	data, err := t.PageData()
+	if err != nil {
 		return t.ServerError(c, err)
 	}
-	t.SetFlush("папа у васи", "info")
+	if err := c.Render(http.StatusOK, t.Name(), t.RenderPageModel("index", data)); err != nil {
+		return t.ServerError(c, err)
+	}
 	return nil
 }
 

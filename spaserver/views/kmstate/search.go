@@ -88,8 +88,14 @@ func (t *page) Search() {
 		// 	}
 		for _, cisItem := range cisResponce {
 			// status := domain.DictCisTypes(cisItem.Result.Status)
-			status := strings.ToLower(cisItem.Result.Status)
-			statusEx := strings.ToLower(cisItem.Result.StatusEx)
+			status := domain.StatusNameByAlias[strings.ToLower(cisItem.Result.Status)]
+			if status == "" {
+				status = strings.ToLower(cisItem.Result.Status)
+			}
+			statusEx := domain.StatusExNameByAlias[strings.ToLower(cisItem.Result.StatusEx)]
+			if statusEx == "" {
+				statusEx = strings.ToLower(cisItem.Result.StatusEx)
+			}
 			if cisItem.ErrorMessage != "" {
 				status = strings.ToLower(cisItem.ErrorMessage)
 			}

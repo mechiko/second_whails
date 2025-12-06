@@ -26,11 +26,12 @@ const (
 	KMState     Model = "kmstate"
 	InnFias     Model = "innfias"
 	Money       Model = "money"
+	CisInfo     Model = "cisinfo"
 )
 
 func IsValidModel(s string) bool {
 	switch Model(s) {
-	case Application, TrueClient, StatusBar, NoPage, Header, Footer, Root, Home, KMState, Menu, InnFias, Money:
+	case Application, TrueClient, StatusBar, NoPage, Header, Footer, Root, Home, KMState, Menu, InnFias, Money, CisInfo:
 		return true
 	default:
 		return false
@@ -65,6 +66,8 @@ func ModelFromString(s string) (Model, error) {
 		return InnFias, nil
 	case string(Money):
 		return Money, nil
+	case string(CisInfo):
+		return CisInfo, nil
 	}
 	return "", fmt.Errorf("%s ошибочная модель domain.Model", s)
 }

@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"korrectkm/domain"
 	"korrectkm/reductor"
+	"time"
 )
 
 type MoneyModel struct {
 	model   domain.Model
 	Title   string
 	Balance *domain.Balance
+	Updated time.Time
 }
 
 var _ domain.Modeler = (*MoneyModel)(nil)
@@ -20,6 +22,7 @@ func NewModel(app domain.Apper) (*MoneyModel, error) {
 		model:   domain.Money,
 		Title:   "Информация по ИНН",
 		Balance: &domain.Balance{},
+		Updated: time.Time{},
 	}
 	if err := model.ReadState(app); err != nil {
 		return nil, fmt.Errorf("model %v read state %w", model.model, err)
