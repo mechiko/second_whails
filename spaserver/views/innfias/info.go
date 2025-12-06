@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func (t *page) info() error {
+func (t *page) info(inn string) error {
 	data, err := t.PageModel()
 	if err != nil {
 		return fmt.Errorf("%w", err)
@@ -24,7 +24,7 @@ func (t *page) info() error {
 	}
 
 	data.InnInfo = &domain.ModFiasInfo{}
-	if err := tc.ModsList(data.InnInfo, []string{"7811755774"}); err != nil {
+	if err := tc.ModsList(data.InnInfo, []string{inn}); err != nil {
 		return fmt.Errorf("%w", err)
 	}
 	data.Updated = time.Now()
