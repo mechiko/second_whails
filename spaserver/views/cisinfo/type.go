@@ -37,8 +37,8 @@ func New(app IServer) *page {
 		modelType:       domain.CisInfo,
 		defaultTemplate: "index",
 		currentTemplate: "index",
-		title:           "Инфо о балансе",
-		description:     "Инфо о балансе",
+		title:           "Инфо по КМ",
+		description:     "Инфо по КМ",
 	}
 	return t
 }

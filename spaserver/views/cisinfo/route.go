@@ -1,6 +1,7 @@
 package cisinfo
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -11,7 +12,7 @@ func (t *page) Routes() error {
 	base := "/" + t.modelType.String()
 	t.Echo().GET(base, t.Index)
 	t.Echo().GET(base+"/reset", t.Reset)
-	t.Echo().GET(base+"/info", t.Info)
+	t.Echo().POST(base+"/info", t.Info)
 	return nil
 }
 
@@ -39,7 +40,14 @@ func (t *page) Reset(c echo.Context) error {
 }
 
 func (t *page) Info(c echo.Context) error {
-	t.balance()
+	cis := c.FormValue("cis")
+	if cis == "" {
+		return t.ServerError(c, fmt.Errorf("inn is empty"))
+	}
+	err := t.info(cis)
+	if err != nil {
+		return t.ServerError(c, err)
+	}
 	data, err := t.PageData()
 	if err != nil {
 		return t.ServerError(c, err)

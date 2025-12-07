@@ -10,7 +10,9 @@ import (
 type CisInfoModel struct {
 	model   domain.Model
 	Title   string
-	Balance *domain.Balance
+	CisInfo domain.CisResult
+	MapInfo map[string]interface{}
+	Json    string
 	Updated time.Time
 }
 
@@ -20,9 +22,9 @@ var _ domain.Modeler = (*CisInfoModel)(nil)
 func NewModel(app domain.Apper) (*CisInfoModel, error) {
 	model := &CisInfoModel{
 		model:   domain.CisInfo,
-		Title:   "Информация по ИНН",
-		Balance: &domain.Balance{},
+		Title:   "Информация по КМ",
 		Updated: time.Time{},
+		MapInfo: make(map[string]interface{}),
 	}
 	if err := model.ReadState(app); err != nil {
 		return nil, fmt.Errorf("model %v read state %w", model.model, err)
