@@ -6,17 +6,17 @@ import (
 	"github.com/mechiko/utility"
 )
 
-func (z *DbZnak) OrderCodes(id int64) (out []string, err error) {
+func (z *DbZnak) GtinCodes(gtin string) (out []string, err error) {
 	sess := z.dbSession
 	codes := make([]map[string]interface{}, 0)
-	res := sess.Collection("order_mark_codes_serial_numbers").Find("id_order_mark_codes", id)
+	res := sess.Collection("order_mark_codes_serial_numbers").Find("gtin", gtin)
 	if err := res.All(&codes); err != nil {
 		// if errors.Is(err, db.ErrNoMoreRows) {
 		// }
 		return nil, err
 	}
-	mpCheck := map[string]bool{}
 	out = make([]string, len(codes))
+	mpCheck := map[string]bool{}
 	for i, code := range codes {
 		c, ok := code["code"].(string)
 		if !ok {

@@ -12,7 +12,7 @@
   <form class="p-0 m-1" hx-post='/kmstate/orderload' hx-target="#page" hx-swap="innerHTML">
     <input value="" 
       class="text-sm border border-gray-300 rounded-sm py-1 px-1 focus:border-blue-500 focus:outline-none" 
-      type="text" placeholder="номер заказа" name='orderid'
+      type="text" placeholder="номер заказа" name='order'
     />
     <input id="sbmtOrder" type="submit" value="Загрузить" 
       class="border-2 border-gray-500 hover:bg-gray-700 text-gray-700 hover:text-white py-0.5 px-1 rounded focus:outline-none focus:shadow-outline"
@@ -21,7 +21,7 @@
   <form class="p-0 m-1" hx-post='/kmstate/utilload' hx-target="#page" hx-swap="innerHTML">
     <input value="" 
       class="text-sm border border-gray-300 rounded-sm py-1 px-1 focus:border-blue-500 focus:outline-none" 
-      type="text" placeholder="номер отчета нанесения" name='utilid'
+      type="text" placeholder="номер отчета нанесения" name='util'
     />
     <input id="sbmtUtil" type="submit" value="Загрузить"  
       class="border-2 border-gray-500 hover:bg-gray-700 text-gray-700 hover:text-white py-0.5 px-1 rounded focus:outline-none focus:shadow-outline"
@@ -39,21 +39,21 @@
    <form class="p-0 m-1" hx-post='/kmstate/gtinload' hx-target="#page" hx-swap="innerHTML">
     <input value="" 
       class="text-sm border border-gray-300 rounded-sm py-1 px-1 focus:border-blue-500 focus:outline-none" 
-      type="text" placeholder="GTIN" name='orderid'
+      type="text" placeholder="GTIN" name='gtin'
     />
     <input id="sbmtOrder" type="submit" value="Загрузить" 
       class="border-2 border-gray-500 hover:bg-gray-700 text-gray-700 hover:text-white py-0.5 px-1 rounded focus:outline-none focus:shadow-outline"
     />
   </form>
-  <form class="p-0 m-1" hx-post='/kmstate/agrload' hx-target="#page" hx-swap="innerHTML">
+  <!-- <form class="p-0 m-1" hx-post='/kmstate/agrload' hx-target="#page" hx-swap="innerHTML">
     <input value="" 
       class="text-sm border border-gray-300 rounded-sm py-1 px-1 focus:border-blue-500 focus:outline-none" 
-      type="text" placeholder="агрегат" name='orderid'
+      type="text" placeholder="агрегат" name='agr'
     />
     <input id="sbmtOrder" type="submit" value="Загрузить" 
       class="border-2 border-gray-500 hover:bg-gray-700 text-gray-700 hover:text-white py-0.5 px-1 rounded focus:outline-none focus:shadow-outline"
     />
-  </form>
+  </form> -->
  <div id="finded"></div>
 </div>
 {{end}}

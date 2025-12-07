@@ -3,6 +3,7 @@ package cisinfo
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 )
@@ -42,8 +43,16 @@ func (t *page) Reset(c echo.Context) error {
 func (t *page) Info(c echo.Context) error {
 	cis := c.FormValue("cis")
 	if cis == "" {
-		return t.ServerError(c, fmt.Errorf("inn is empty"))
+		return t.ServerError(c, fmt.Errorf("пустой код"))
 	}
+	if len(cis) < 16 {
+		return t.ServerError(c, fmt.Errorf("мало знаков для кода"))
+	}
+	index := strings.IndexByte(cis, '\x1D')
+	if index > 0 {
+		cis = cis[:index]
+	}
+
 	err := t.info(cis)
 	if err != nil {
 		return t.ServerError(c, err)
