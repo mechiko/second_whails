@@ -1,0 +1,5 @@
+{{if .}}
+<button class="p-1" hx-get="/copy/{{.}}" hx-trigger="click" hx-target="this" hx-swap="outerHTML">
+<img src="/assets/images/copy.svg" alt="Copy to clipboard">
+</button>
+{{end}}

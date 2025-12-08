@@ -28,11 +28,11 @@ func NewModel(app domain.Apper) (*HomeModel, error) {
 
 // инициализируем модель вида
 func (t *page) InitData(_ domain.Apper) (interface{}, error) {
-	model := HomeModel{
-		Title:   "HOME",
-		CodeFNS: `0104630277410873215!,asF,l1k"LH91EE1192PK6ejb9KiEm4jqt2G7tesaQ4bbukQfZumYfUrNxf9kE=`,
+	model, err := NewModel(t)
+	if err != nil {
+		return nil, fmt.Errorf("%w", err)
 	}
-	err := reductor.SetModel(&model, false)
+	err = reductor.SetModel(model, false)
 	if err != nil {
 		return nil, fmt.Errorf("%w", err)
 	}
@@ -61,4 +61,9 @@ func (a *HomeModel) Model() domain.Model {
 
 func (a *HomeModel) Save(_ domain.Apper) (err error) {
 	return nil
+}
+
+// всегда возвращает true означает проверки нет всегда ок
+func (m *HomeModel) License() bool {
+	return true
 }

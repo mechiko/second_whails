@@ -10,26 +10,24 @@ import (
 	"korrectkm/config"
 	"korrectkm/domain"
 	"korrectkm/domain/models/modeltrueclient"
-	"korrectkm/embedded"
 	"korrectkm/guiconnect"
 	"korrectkm/reductor"
 	"korrectkm/repo"
 	"korrectkm/spaserver"
 	"korrectkm/trueclient"
 	"korrectkm/zaplog"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
 
-	"github.com/mechiko/dbscan"
-	"github.com/mechiko/utility"
-	"go.uber.org/zap"
+	"korrectkm/dbscan"
 
-	"github.com/wailsapp/wails/v2"
-	"github.com/wailsapp/wails/v2/pkg/logger"
-	"github.com/wailsapp/wails/v2/pkg/options"
-	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
-	"github.com/wailsapp/wails/v2/pkg/options/windows"
+	"github.com/labstack/echo/v4"
+	"github.com/mechiko/utility"
+	"github.com/wailsapp/wails/v3/pkg/application"
+	"github.com/wailsapp/wails/v3/pkg/events"
+	"go.uber.org/zap"
 
 	"golang.org/x/sync/errgroup"
 )
@@ -154,7 +152,8 @@ func main() {
 
 	err = repo.New(listDbs, ".")
 	if err != nil {
-		errProcessExit("Ошибка запуска репозитория", err)
+		loger.Warnf("Ошибка запуска репозитория %v", err)
+		// errProcessExit("Ошибка запуска репозитория", err)
 	}
 	repoStart, err := repo.GetRepository()
 	if err != nil {
@@ -215,11 +214,11 @@ func main() {
 			if err != nil {
 				errProcessExit("Ошибка подключения к ЧЗ", err)
 			}
+			err = reductor.SetModel(modelTcl, false)
+			if err != nil {
+				errProcessExit("Ошибка сохранения модели в приложение", err)
+			}
 		}
-		// err = guiconnect.StartDialog(app, modelTcl)
-		// if err != nil {
-		// 	errProcessExit("Ошибка подключения к ЧЗ", err)
-		// }
 	}
 
 	// тут инициализируются так же модели для всех видов
@@ -228,58 +227,29 @@ func main() {
 	// запускаем сервер эхо через него SSE работает для флэш сообщений
 	httpServer.Start()
 
-	if err := wails.Run(&options.App{
-		Title:     "Утилиты для ЧЗ и А3",
-		Width:     1040,
-		Height:    768,
-		MinWidth:  200,
-		MinHeight: 200,
-		// MaxWidth:      1280,
-		// MaxHeight:     800,
-		DisableResize: false,
-		Fullscreen:    false,
-		Frameless:     false,
-		// CSSDragProperty:   "windows",
-		// CSSDragValue:      "1",
-		StartHidden:       false,
-		HideWindowOnClose: false,
-		BackgroundColour:  &options.RGBA{R: 255, G: 255, B: 255, A: 255},
-		AssetServer: &assetserver.Options{
-			Assets: embedded.Root,
-			// Middleware: func(next http.Handler) http.Handler {
-			// 	// устанавливаем обработку not found на предлагаемую по умолчанию wails
-			// 	// это произойдет когда наш роутер не найдет нужного
-			// 	httpServer.Echo().RouteNotFound("/", func(c echo.Context) error {
-			// 		// return c.NoContent(204)
-			// 		return c.String(200, "not found")
-			// 	})
-			// 	return httpServer.Handler()
-			// },
-			Handler: httpServer.Handler(),
+	appw := application.New(application.Options{
+		Name: "KorrectKM",
+		Assets: application.AssetOptions{
+			Handler:    httpServer.Echo(),
+			Middleware: EchoMiddleware(httpServer.Echo()),
 		},
-		// Menu:             webApp.ApplicationMenu(),
-		EnableDefaultContextMenu: true,
-		Logger:                   nil,
-		LogLevel:                 logger.INFO,
-		OnStartup:                app.Startup,
-		// OnDomReady:               httpServer.Publish,
-		OnBeforeClose:    app.BeforeClose,
-		OnShutdown:       app.Shutdown,
-		WindowStartState: options.Normal,
-		// Windows platform specific options
-		Windows: &windows.Options{
-			WebviewIsTransparent: false,
-			WindowIsTranslucent:  false,
-			DisableWindowIcon:    false,
-			// DisableFramelessWindowDecorations: false,
-			WebviewUserDataPath: "",
-			ZoomFactor:          1.0,
-		},
-		Debug: options.Debug{
-			OpenInspectorOnStartup: true,
-		},
-	}); err != nil {
-		loger.Errorf("%s wails error %s", modError, err.Error())
+		Logger:  nil,
+		Windows: application.WindowsOptions{},
+	})
+	app.SetWails(appw)
+	wv := appw.Window.NewWithOptions(application.WebviewWindowOptions{
+		Title:  "Инструменты",
+		Width:  1024,
+		Height: 768,
+	})
+	if debug {
+		appw.Event.OnApplicationEvent(events.Common.ApplicationStarted, func(event *application.ApplicationEvent) {
+			wv.OpenDevTools()
+		})
+	}
+	err = appw.Run()
+	if err != nil {
+		panic(err)
 	}
 	cancel()
 	// ожидание завершения всех в группе
@@ -289,4 +259,19 @@ func main() {
 		fmt.Println("game over!")
 	}
 	zl.Shutdown()
+}
+
+// creates a middleware that passes requests to Echo if they're not handled by Wails
+func EchoMiddleware(echoEngine *echo.Echo) application.Middleware {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			// Let Wails handle the `/wails` route
+			if strings.HasPrefix(r.URL.Path, "/wails") {
+				next.ServeHTTP(w, r)
+				return
+			}
+			// Let Echo handle everything else
+			echoEngine.ServeHTTP(w, r)
+		})
+	}
 }

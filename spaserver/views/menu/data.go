@@ -11,7 +11,8 @@ func (t *page) InitData(_ domain.Apper) (interface{}, error) {
 	if err != nil {
 		return nil, fmt.Errorf("%w", err)
 	}
-	for _, m := range t.Menu() {
+	menu := t.Menu()
+	for _, m := range menu {
 		page, ok := t.Views()[m]
 		if !ok {
 			t.Logger().Errorf("menu %s not found", m.String())

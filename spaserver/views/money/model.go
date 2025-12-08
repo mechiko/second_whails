@@ -4,11 +4,14 @@ import (
 	"fmt"
 	"korrectkm/domain"
 	"korrectkm/reductor"
+	"time"
 )
 
 type MoneyModel struct {
-	model domain.Model
-	Title string
+	model   domain.Model
+	Title   string
+	Balance *domain.Balance
+	Updated time.Time
 }
 
 var _ domain.Modeler = (*MoneyModel)(nil)
@@ -16,8 +19,10 @@ var _ domain.Modeler = (*MoneyModel)(nil)
 // создаем модель считываем ее состояние и возвращаем указатель
 func NewModel(app domain.Apper) (*MoneyModel, error) {
 	model := &MoneyModel{
-		model: domain.Money,
-		Title: "Информация по ИНН",
+		model:   domain.Money,
+		Title:   "Информация по ИНН",
+		Balance: &domain.Balance{},
+		Updated: time.Time{},
 	}
 	if err := model.ReadState(app); err != nil {
 		return nil, fmt.Errorf("model %v read state %w", model.model, err)
@@ -60,4 +65,9 @@ func (a *MoneyModel) Model() domain.Model {
 
 func (a *MoneyModel) Save(_ domain.Apper) (err error) {
 	return nil
+}
+
+// всегда возвращает true означает проверки нет всегда ок
+func (m *MoneyModel) License() bool {
+	return true
 }

@@ -24,6 +24,10 @@ func Model[T domain.Modeler](src domain.Model) (T, error) {
 			if err != nil {
 				return resultNil, fmt.Errorf("reductor clone model %w", err)
 			}
+			// добавим проверку Licenser
+			if !returnModel.License() {
+				return resultNil, fmt.Errorf("reductor license model %w", err)
+			}
 			return returnModel, nil
 		}
 		return resultNil, fmt.Errorf("model wrong type %T", pageModel)

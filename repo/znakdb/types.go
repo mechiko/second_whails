@@ -4,7 +4,8 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/mechiko/dbscan"
+	"korrectkm/dbscan"
+
 	"github.com/upper/db/v4"
 	"go.uber.org/zap"
 )

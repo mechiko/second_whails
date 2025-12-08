@@ -1,0 +1,15 @@
+<div class="w-full">
+  <div>Информация по КМ</div>
+  <form class="p-0 m-1" hx-post='/cisinfo/info' hx-target="#inninfo" hx-swap="innerHTML">
+    <input value="" 
+      class="text-sm border border-gray-300 rounded-sm py-1 px-1 focus:border-blue-500 focus:outline-none" 
+      type="text" placeholder="штрихкод" name='cis'
+    />
+    <input id="sbmtOrder" type="submit" value="Запросить" 
+      class="border-2 border-gray-500 hover:bg-gray-700 text-gray-700 hover:text-white py-0.5 px-1 rounded focus:outline-none focus:shadow-outline"
+    />
+  </form>
+  <div id="inninfo">
+    {{ template "info" . }}
+  </div>
+</div>

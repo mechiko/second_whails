@@ -59,81 +59,95 @@ type CisJson struct {
 
 type CisJsonSlice []*CisJson
 
+type CisResult struct {
+	RequestedCis        string        `json:"requestedCis"`
+	Cis                 string        `json:"cis"`
+	CisWithoutBrackets  string        `json:"cisWithoutBrackets"`
+	Gtin                string        `json:"gtin"`
+	ProducerInn         string        `json:"producerInn"`
+	Status              string        `json:"status"`
+	StatusEx            string        `json:"statusEx"`
+	EmissionDate        time.Time     `json:"emissionDate"`
+	ApplicationDate     time.Time     `json:"applicationDate"`
+	Parent              string        `json:"parent"`
+	PackageType         string        `json:"packageType"`
+	OwnerInn            string        `json:"ownerInn"`
+	Kpp                 string        `json:"kpp"`
+	TnVedEaesGroup      string        `json:"tnVedEaesGroup"`
+	TnVedEaes           string        `json:"tnVedEaes"`
+	ReceiptDate         time.Time     `json:"receiptDate"`
+	EmissionType        string        `json:"emissionType"`
+	ConnectDate         time.Time     `json:"connectDate"`
+	ProductGroup        string        `json:"productGroup"`
+	ProductGroupID      int           `json:"productGroupId"`
+	ExtendedPackageType string        `json:"extendedPackageType"`
+	ProducedDate        time.Time     `json:"producedDate"`
+	VolumeSpecialPack   string        `json:"volumeSpecialPack"`
+	Children            []interface{} `json:"children"`
+	Ogvs                []interface{} `json:"ogvs"`
+	Expirations         []struct {
+		ExpirationStorageDate time.Time `json:"expirationStorageDate"`
+		StorageConditionID    int       `json:"storageConditionId"`
+		StorageConditionName  string    `json:"storageConditionName"`
+	} `json:"expirations"`
+	OwnerMod struct {
+		ModID   int    `json:"modId"`
+		Kpp     string `json:"kpp"`
+		Address string `json:"address"`
+	} `json:"ownerMod"`
+	Licences []struct {
+		LicenceNumber string `json:"licenceNumber"`
+		LicenceDate   string `json:"licenceDate"`
+	} `json:"licences"`
+	SpecialAttributes struct {
+		MaxRetailPrice           float64   `json:"maxRetailPrice"`
+		ExpirationDate           time.Time `json:"expirationDate"`
+		PrVetDocument            string    `json:"prVetDocument"`
+		Capacity                 string    `json:"capacity"`
+		TurnoverType             string    `json:"turnoverType"`
+		RetType                  string    `json:"retType"`
+		ExpNum                   string    `json:"expNum"`
+		ExpName                  string    `json:"expName"`
+		RemainsImport            string    `json:"remainsImport"`
+		FtsDecisionCode          string    `json:"ftsDecisionCode"`
+		QuantityInPack           int       `json:"quantityInPack"`
+		SoldCount                int       `json:"soldCount"`
+		EliminationReasonOther   string    `json:"eliminationReasonOther"`
+		ProductWeightGr          int       `json:"productWeightGr"`
+		ManufacturerSerialNumber string    `json:"manufacturerSerialNumber"`
+		IntroducedDate           time.Time `json:"introducedDate"`
+		StatusEx                 string    `json:"statusEx"`
+		ProductGroup             string    `json:"productGroup"`
+		ProductGroupID           int       `json:"productGroupId"`
+		ExtendedPackageType      string    `json:"extendedPackageType"`
+		WithdrawReason           string    `json:"withdrawReason"`
+		NextCis                  []string  `json:"nextCis"`
+		PrevCis                  []string  `json:"prevCis"`
+		ApprovementDocument      struct {
+			CertDoc []struct {
+				Type       string    `json:"type"`
+				Number     string    `json:"number"`
+				Date       time.Time `json:"date"`
+				WellNumber string    `json:"wellNumber"`
+			} `json:"certDoc"`
+			DeclarationDate      string `json:"declarationDate"`
+			DeclarationRegNumber string `json:"declarationRegNumber"`
+			DeclarationID        string `json:"declarationId"`
+		} `json:"approvementDocument"`
+		IsVarQuantity bool `json:"isVarQuantity"`
+	} `json:"specialAttributes"`
+	IntroducedDate     time.Time     `json:"introducedDate"`
+	IsVarQuantity      bool          `json:"isVarQuantity"`
+	ProductName        string        `json:"productName"`
+	GeneralPackageType string        `json:"generalPackageType"`
+	ProducerName       string        `json:"producerName"`
+	OwnerName          string        `json:"ownerName"`
+	Child              []interface{} `json:"child"`
+	MaxRetailPrice     interface{}   `json:"maxRetailPrice"`
+}
+
 type CisPostJson struct {
-	Result struct {
-		RequestedCis        string        `json:"requestedCis"`
-		Cis                 string        `json:"cis"`
-		CisWithoutBrackets  string        `json:"cisWithoutBrackets"`
-		Gtin                string        `json:"gtin"`
-		ProducerInn         string        `json:"producerInn"`
-		Status              string        `json:"status"`
-		StatusEx            string        `json:"statusEx"`
-		EmissionDate        time.Time     `json:"emissionDate"`
-		ApplicationDate     time.Time     `json:"applicationDate"`
-		Parent              string        `json:"parent"`
-		PackageType         string        `json:"packageType"`
-		OwnerInn            string        `json:"ownerInn"`
-		TnVedEaesGroup      string        `json:"tnVedEaesGroup"`
-		TnVedEaes           string        `json:"tnVedEaes"`
-		ReceiptDate         time.Time     `json:"receiptDate"`
-		EmissionType        string        `json:"emissionType"`
-		ConnectDate         time.Time     `json:"connectDate"`
-		ProductGroup        string        `json:"productGroup"`
-		ProductGroupID      int           `json:"productGroupId"`
-		ExtendedPackageType string        `json:"extendedPackageType"`
-		ProducedDate        time.Time     `json:"producedDate"`
-		VolumeSpecialPack   string        `json:"volumeSpecialPack"`
-		Children            []interface{} `json:"children"`
-		OwnerMod            struct {
-			ModID int `json:"modId"`
-		} `json:"ownerMod"`
-		Ogvs        []interface{} `json:"ogvs"`
-		Expirations []struct {
-			StorageConditionID    int    `json:"storageConditionId"`
-			ExpirationStorageDate string `json:"expirationStorageDate"`
-		} `json:"expirations"`
-		Licences []struct {
-			LicenceNumber string `json:"licenceNumber"`
-			LicenceDate   string `json:"licenceDate"`
-		} `json:"licences"`
-		SpecialAttributes struct {
-			MaxRetailPrice           float64   `json:"maxRetailPrice"`
-			ExpirationDate           time.Time `json:"expirationDate"`
-			PrVetDocument            string    `json:"prVetDocument"`
-			Capacity                 string    `json:"capacity"`
-			TurnoverType             string    `json:"turnoverType"`
-			RetType                  string    `json:"retType"`
-			ExpNum                   string    `json:"expNum"`
-			ExpName                  string    `json:"expName"`
-			RemainsImport            string    `json:"remainsImport"`
-			FtsDecisionCode          string    `json:"ftsDecisionCode"`
-			QuantityInPack           int       `json:"quantityInPack"`
-			SoldCount                int       `json:"soldCount"`
-			EliminationReasonOther   string    `json:"eliminationReasonOther"`
-			ProductWeightGr          int       `json:"productWeightGr"`
-			ManufacturerSerialNumber string    `json:"manufacturerSerialNumber"`
-			IntroducedDate           time.Time `json:"introducedDate"`
-			StatusEx                 string    `json:"statusEx"`
-			ProductGroup             string    `json:"productGroup"`
-			ProductGroupID           int       `json:"productGroupId"`
-			ExtendedPackageType      string    `json:"extendedPackageType"`
-			WithdrawReason           string    `json:"withdrawReason"`
-			NextCis                  []string  `json:"nextCis"`
-			PrevCis                  []string  `json:"prevCis"`
-			ApprovementDocument      struct {
-				CertDoc []struct {
-					Type       string    `json:"type"`
-					Number     string    `json:"number"`
-					Date       time.Time `json:"date"`
-					WellNumber string    `json:"wellNumber"`
-				} `json:"certDoc"`
-				DeclarationDate      string `json:"declarationDate"`
-				DeclarationRegNumber string `json:"declarationRegNumber"`
-				DeclarationID        string `json:"declarationId"`
-			} `json:"approvementDocument"`
-			IsVarQuantity bool `json:"isVarQuantity"`
-		} `json:"specialAttributes"`
-	} `json:"result"`
-	ErrorMessage string `json:"errorMessage"`
-	ErrorCode    string `json:"errorCode"`
+	Result       CisResult `json:"result"`
+	ErrorMessage string    `json:"errorMessage"`
+	ErrorCode    string    `json:"errorCode"`
 }

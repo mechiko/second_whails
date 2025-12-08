@@ -7,7 +7,8 @@ import (
 	"korrectkm/repo"
 	"time"
 
-	"github.com/mechiko/dbscan"
+	"korrectkm/dbscan"
+
 	"github.com/mechiko/utility"
 )
 
@@ -25,7 +26,6 @@ type Application struct {
 	DbConfigDesc string
 	DbZnakDesc   string
 	DbA3Desc     string
-	License      string
 	FsrarID      string
 	startTime    time.Time
 	endTime      time.Time
@@ -119,7 +119,6 @@ func (m *Application) ReadState(app domain.Apper, rp *repo.Repository) (err erro
 			}
 		}
 	}
-	m.License = app.Options().Application.License
 	if cfgDb, err := rp.LockConfig(); err == nil {
 		defer rp.UnlockConfig(cfgDb)
 		if fsrarId, err := cfgDb.Key("fsrar_id"); err == nil {
@@ -144,4 +143,9 @@ func (m *Application) Save(app domain.Apper) (err error) {
 		return fmt.Errorf("application: save options failed: %w", err)
 	}
 	return nil
+}
+
+// всегда возвращает true означает проверки нет всегда ок
+func (m *Application) License() bool {
+	return true
 }

@@ -6,7 +6,7 @@ import (
 	"korrectkm/reductor"
 	"korrectkm/repo"
 
-	"github.com/mechiko/dbscan"
+	"korrectkm/dbscan"
 )
 
 type KmStateModel struct {
@@ -17,12 +17,13 @@ type KmStateModel struct {
 	Chunks              int             // куски
 	CisOut              domain.CisSlice // список CIS полученных
 	CisStatus           map[string]map[string]int
-	ExcelChunkSize      int      // размер куска для выгрузки в файл ексель
-	IsConnectedTrueZnak bool     // есть подключение к ЧЗ
-	IsTrueZnakA3        bool     // подключена БД ЧЗ А3
-	AtkId               int      // номер ATK в ЧЗ А3
-	OrderId             int      // номер заказа в ЧЗ А3
-	UtilisationId       int      // номер отчета нанесения в ЧЗ А3
+	ExcelChunkSize      int  // размер куска для выгрузки в файл ексель
+	IsConnectedTrueZnak bool // есть подключение к ЧЗ
+	IsTrueZnakA3        bool // подключена БД ЧЗ А3
+	AtkId               int  // номер ATK в ЧЗ А3
+	OrderId             int  // номер заказа в ЧЗ А3
+	UtilisationId       int  // номер отчета нанесения в ЧЗ А3
+	Gtin                string
 	Progress            int      // прогресс опроса
 	IsProgress          bool     // true если идет процесс загрузки для отображения прогресса
 	Errors              []string // массив ошибок
@@ -86,4 +87,9 @@ func (a *KmStateModel) Model() domain.Model {
 
 func (a *KmStateModel) Save(_ domain.Apper) (err error) {
 	return nil
+}
+
+// всегда возвращает true означает проверки нет всегда ок
+func (m *KmStateModel) License() bool {
+	return true
 }

@@ -1,0 +1,30 @@
+{{if not $.Updated.IsZero}}
+<div class="m-1">Обновлено {{ddmmyyhhmmss $.Updated}}</div>
+<div class="h-[calc(100vh-10rem)] overflow-y-auto w-full">
+    <table class="table-auto ml-2 mt-1">
+      <col style="width:10%">
+      <col style="width:30%">
+      <col />
+      <thead class="sticky top-0 bg-white z-10 h-6">
+        <tr>
+          <th class="text-left p-1">ИНН/КПП</th>
+          <th class="text-left p-1">ФИАС</th>
+          <th class="text-left p-1">Адрес</th>
+        </tr>
+      </thead>
+      <tbody>
+{{range $i, $b := $.InnInfo.Result}}
+      <tr class="text-base">
+        <td class="pl-1 text-sm border text-left">{{$b.Inn}}<BR>{{$b.Kpp}}</td>
+        <td class="pl-1 text-sm border">
+          <div class="flex items-center justify-center">{{$b.FiasID}} {{ template "copy" $b.FiasID }}</div>
+        </td>
+        <td class="pl-1 text-sm border">
+          <div class="flex items-left">{{$b.Address}} {{ template "copy" $b.Address }}</div>
+        </td>
+      </tr>
+{{end}}
+      </tbody>
+    </table>
+  </div>
+{{end}}

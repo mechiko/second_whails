@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"korrectkm/domain"
 	"korrectkm/domain/mystore"
+	"korrectkm/licenser"
 	"korrectkm/repo"
 	"net/url"
 	"time"
 
-	"github.com/mechiko/dbscan"
+	"korrectkm/dbscan"
 )
 
 type PingSuzInfo struct {
@@ -105,6 +106,12 @@ func (m *TrueClientModel) ReadState(app domain.Apper) (err error) {
 		return fmt.Errorf("%w", err)
 	}
 	m.IsConfigDB = rp.Is(dbscan.Config)
+	if !m.IsConfigDB && m.UseConfigDB {
+		m.UseConfigDB = false
+		m.SyncToStore(app)
+		app.SaveOptions()
+		return nil
+	}
 	if m.IsConfigDB && m.UseConfigDB {
 		dbCfg, err := rp.LockConfig()
 		if err != nil {
@@ -157,4 +164,13 @@ func (a *TrueClientModel) Model() domain.Model {
 
 func (a *TrueClientModel) Save(_ domain.Apper) (err error) {
 	return nil
+}
+
+// проверяем лицензию здесь
+func (m *TrueClientModel) License() bool {
+	_, err := licenser.New(licenser.OmsID, m.OmsID)
+	if err != nil {
+		return false
+	}
+	return true
 }

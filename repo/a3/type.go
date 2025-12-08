@@ -3,7 +3,8 @@ package a3
 import (
 	"fmt"
 
-	"github.com/mechiko/dbscan"
+	"korrectkm/dbscan"
+
 	"github.com/upper/db/v4"
 )
 

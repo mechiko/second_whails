@@ -80,3 +80,8 @@ func (a *MenuModel) ActiveTitle() string {
 	}
 	return ""
 }
+
+// всегда возвращает true означает проверки нет всегда ок
+func (m *MenuModel) License() bool {
+	return true
+}

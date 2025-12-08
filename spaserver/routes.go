@@ -2,22 +2,26 @@ package spaserver
 
 import (
 	"fmt"
+	"korrectkm/spaserver/views/cisinfo"
 	"korrectkm/spaserver/views/footer"
 	"korrectkm/spaserver/views/header"
 	"korrectkm/spaserver/views/home"
-	"korrectkm/spaserver/views/index"
 	"korrectkm/spaserver/views/innfias"
 	"korrectkm/spaserver/views/kmstate"
 	"korrectkm/spaserver/views/menu"
 	"korrectkm/spaserver/views/money"
+	"korrectkm/spaserver/views/root"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/mechiko/walk"
 )
 
 // маршрутизация приложения
 func (s *Server) Routes() http.Handler {
 	s.loadViews()
+	s.server.GET("/", s.Index)
+	s.server.GET("/copy/:value", s.copy) // переход/загрузка на текущую страницу
 	s.server.GET("/page", s.Page)        // переход/загрузка на текущую страницу
 	s.server.GET("/page/reset", s.Reset) // переход/загрузка на текущую страницу
 	s.server.GET("/sse", s.Sse)
@@ -65,8 +69,8 @@ func (s *Server) loadViews() {
 	s.views[view4.ModelType()] = view4
 	view4.Routes()
 	view4.InitData(s)
-	// view index
-	view5 := index.New(s)
+	// view root
+	view5 := root.New(s)
 	s.views[view5.ModelType()] = view5
 	// menu
 	view6 := menu.New(s)
@@ -82,7 +86,30 @@ func (s *Server) loadViews() {
 	s.views[view8.ModelType()] = view8
 	view8.Routes()
 	view8.InitData(s)
+	// CisInfo
+	view9 := cisinfo.New(s)
+	s.views[view9.ModelType()] = view9
+	view9.Routes()
+	view9.InitData(s)
 	// header инициализируем последним нужны все виды сервера в списке
 	view1.InitData(s)
 	view6.InitData(s)
+}
+
+func (s *Server) Index(c echo.Context) error {
+	if err := c.Render(http.StatusOK, "root", map[string]interface{}{
+		"template": "index",
+		"data":     &struct{}{},
+	}); err != nil {
+		return s.ServerError(c, err)
+	}
+	return nil
+}
+
+func (s *Server) copy(c echo.Context) error {
+	value := c.Param("value")
+	walk.Clipboard().SetText(value)
+	// s.SetFlush("инфо", fmt.Sprintf("значение %s скопировано", value))
+	s.SetFlush("скопировано в буфер значение "+value, "info")
+	return c.String(200, "")
 }

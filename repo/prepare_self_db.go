@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"korrectkm/repo/selfdb"
 
-	"github.com/mechiko/dbscan"
+	"korrectkm/dbscan"
 )
 
 // при инициализации приложения этот метод вызывается однажды и прописывает объект доступа

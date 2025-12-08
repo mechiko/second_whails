@@ -4,27 +4,12 @@ import (
 	_ "embed"
 	"korrectkm/domain"
 	"strings"
-
-	"github.com/donseba/go-htmx"
-	"github.com/labstack/echo/v4"
 )
 
 // const modError = "home"
 
-type IServer interface {
-	domain.Apper
-	Echo() *echo.Echo
-	ServerError(c echo.Context, err error) error
-	SetActivePage(domain.Model)
-	// msg сообщение
-	// msgType тип сообщения error info spaserver\templates\index\flush.html
-	SetFlush(string, string)
-	RenderString(name string, data interface{}) (str string, err error)
-	Htmx() *htmx.HTMX
-}
-
 type page struct {
-	IServer
+	domain.IServer
 	modelType domain.Model
 	// name            string
 	defaultTemplate string
@@ -33,7 +18,7 @@ type page struct {
 	description     string
 }
 
-func New(app IServer) *page {
+func New(app domain.IServer) *page {
 	t := &page{
 		IServer:         app,
 		modelType:       domain.KMState,

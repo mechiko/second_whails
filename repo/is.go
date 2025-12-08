@@ -1,6 +1,6 @@
 package repo
 
-import "github.com/mechiko/dbscan"
+import "korrectkm/dbscan"
 
 func (r *Repository) Is(t dbscan.DbInfoType) bool {
 	if r == nil || r.dbs == nil {

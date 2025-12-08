@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"syscall"
 
 	"github.com/aglyzov/charmap"
 )
@@ -81,6 +82,9 @@ func (c *cmdexec) Sign(in string) (string, error) {
 	}
 
 	cmd := exec.Command("csptest.exe", c.Command...)
+	// Set SysProcAttr to hide the window.
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+
 	if out, err := cmd.CombinedOutput(); err != nil {
 		decodeString := charmap.ToUTF8(&charmap.CP866_UTF8_TABLE, out)
 		// fmt.Printf("sign %s", decodeString)

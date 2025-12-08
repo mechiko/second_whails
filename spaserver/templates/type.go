@@ -7,7 +7,6 @@ import (
 	"korrectkm/domain"
 	"path/filepath"
 
-	"github.com/alexedwards/scs/v2"
 	"github.com/mechiko/utility"
 )
 
@@ -38,7 +37,7 @@ func rootPathTemplates() (out string) {
 
 type IApp interface {
 	domain.Apper
-	SessionManager() *scs.SessionManager
+	// SessionManager() *scs.SessionManager
 	SetTitlePage(string)
 }
 
