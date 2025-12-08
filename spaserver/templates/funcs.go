@@ -60,10 +60,10 @@ var functions = template.FuncMap{
 			return ""
 		}
 		f := filepath.Base(t)
-		if len(f) < 40 {
+		r := []rune(f)
+		if len(r) < 40 {
 			return f
 		}
-		r := []rune(f)
 		lastN := string(r[len(r)-15:])
 		startN := string(r[:15])
 		return fmt.Sprintf("%s..%s", startN, lastN)
