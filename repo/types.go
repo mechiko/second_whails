@@ -1,11 +1,10 @@
 package repo
 
 import (
-	"errors"
 	"fmt"
 	"sync"
 
-	"github.com/mechiko/dbscan"
+	"korrectkm/dbscan"
 )
 
 const modError = "pkg:repo"
@@ -50,34 +49,29 @@ func New(listDbs dbscan.ListDbInfoForScan, dbPath string) (err error) {
 			return fmt.Errorf("%s in list [%v] is nil", modError, tp)
 		}
 	}
-	dbs, err := dbscan.New(listDbs, dbPath)
+	dbs, err := dbscan.New(dbPath)
 	if err != nil {
 		return fmt.Errorf("%s dbscan error %w", modError, err)
-	}
-	r.dbs = dbs
-	r.listDbs = make([]dbscan.DbInfoType, 0, len(listDbs))
-	for tp := range listDbs {
-		dbInfo := r.dbs.Info(tp)
-		if dbInfo == nil {
-			// такая ошибка не вероятна дбскан выдаст ошибку при сканировании
-			// но проверить надо вдруг чего...
-			err = errors.Join(err, fmt.Errorf("%s отсутствует БД %v", modError, tp))
-		} else {
-			r.listDbs = append(r.listDbs, tp)
-			// создаем в мапе мьютекс
-			if _, ok := r.dbMutex[tp]; !ok {
-				r.dbMutex[tp] = &singleMutex{}
+	} else {
+		r.dbs = dbs
+		r.listDbs = make([]dbscan.DbInfoType, 0, len(listDbs))
+		for tp := range listDbs {
+			dbInfo := r.dbs.Info(tp)
+			if dbInfo != nil {
+				// бд есть
+				r.listDbs = append(r.listDbs, tp)
+				// создаем в мапе мьютекс
+				if _, ok := r.dbMutex[tp]; !ok {
+					r.dbMutex[tp] = &singleMutex{}
+				}
 			}
 		}
-	}
-	if err != nil {
-		return fmt.Errorf("%s не все бд найдены %v", modError, err)
-	}
-	if di := r.dbs.Info(dbscan.Other); di != nil {
-		// инициализация для Self если она есть в настройках списка доступных БД
-		if err := r.prepareSelf(); err != nil {
-			return fmt.Errorf("%s ошибка миграции self %w", modError, err)
-		}
+		// if di := r.dbs.Info(dbscan.Other); di != nil {
+		// 	// инициализация для Self если она есть в настройках списка доступных БД
+		// 	if err := r.prepareSelf(); err != nil {
+		// 		return fmt.Errorf("%s ошибка миграции self %w", modError, err)
+		// 	}
+		// }
 	}
 	rpMu.Lock()
 	rp = r

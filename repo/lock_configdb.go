@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"korrectkm/repo/configdb"
 
-	"github.com/mechiko/dbscan"
+	"korrectkm/dbscan"
 )
 
 // if err is nil then must after Lock launch UnLock

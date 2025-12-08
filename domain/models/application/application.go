@@ -7,7 +7,8 @@ import (
 	"korrectkm/repo"
 	"time"
 
-	"github.com/mechiko/dbscan"
+	"korrectkm/dbscan"
+
 	"github.com/mechiko/utility"
 )
 

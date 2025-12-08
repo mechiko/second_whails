@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/mechiko/dbscan"
+	"korrectkm/dbscan"
 )
 
 type PingSuzInfo struct {
@@ -106,6 +106,12 @@ func (m *TrueClientModel) ReadState(app domain.Apper) (err error) {
 		return fmt.Errorf("%w", err)
 	}
 	m.IsConfigDB = rp.Is(dbscan.Config)
+	if !m.IsConfigDB && m.UseConfigDB {
+		m.UseConfigDB = false
+		m.SyncToStore(app)
+		app.SaveOptions()
+		return nil
+	}
 	if m.IsConfigDB && m.UseConfigDB {
 		dbCfg, err := rp.LockConfig()
 		if err != nil {

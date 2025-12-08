@@ -21,8 +21,9 @@ import (
 	"path/filepath"
 	"strings"
 
+	"korrectkm/dbscan"
+
 	"github.com/labstack/echo/v4"
-	"github.com/mechiko/dbscan"
 	"github.com/mechiko/utility"
 	"github.com/wailsapp/wails/v3/pkg/application"
 	"github.com/wailsapp/wails/v3/pkg/events"
@@ -151,7 +152,8 @@ func main() {
 
 	err = repo.New(listDbs, ".")
 	if err != nil {
-		errProcessExit("Ошибка запуска репозитория", err)
+		loger.Warnf("Ошибка запуска репозитория %v", err)
+		// errProcessExit("Ошибка запуска репозитория", err)
 	}
 	repoStart, err := repo.GetRepository()
 	if err != nil {

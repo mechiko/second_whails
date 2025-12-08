@@ -6,7 +6,7 @@ import (
 	"korrectkm/reductor"
 	"korrectkm/repo"
 
-	"github.com/mechiko/dbscan"
+	"korrectkm/dbscan"
 )
 
 type KmStateModel struct {

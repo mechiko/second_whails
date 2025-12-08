@@ -1,6 +1,6 @@
 package repo
 
-import "github.com/mechiko/dbscan"
+import "korrectkm/dbscan"
 
 func (r *Repository) Ping(t dbscan.DbInfoType) (result bool) {
 	defer func() {

@@ -6,7 +6,6 @@ require (
 	github.com/aglyzov/charmap v0.0.0-20240916203842-8463cca61eca
 	github.com/google/uuid v1.6.0
 	github.com/labstack/echo/v4 v4.13.4
-	github.com/mechiko/dbscan v0.0.0-20250824090424-a3ed3ef70222
 	github.com/mechiko/utility v0.0.0-20250901141646-cc9c20f08412
 	github.com/mechiko/walk v0.0.0-20230816210514-788aa73102d5
 	github.com/pressly/goose/v3 v3.24.3
