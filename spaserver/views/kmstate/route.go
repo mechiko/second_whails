@@ -292,8 +292,15 @@ func (t *page) gtinLoad(c echo.Context) error {
 			return nil
 		},
 		fetchCodes: func(val interface{}) ([]string, error) {
-			rp, _ := repo.GetRepository()
-			zn, _ := rp.LockZnak()
+			rp, err := repo.GetRepository()
+			if err != nil {
+				return nil, err
+			}
+			zn, err := rp.LockZnak()
+			if err != nil {
+				return nil, err
+			}
+			defer rp.UnlockZnak(zn)
 			return zn.GtinCodes(val.(string))
 		},
 	})

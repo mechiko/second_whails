@@ -242,11 +242,11 @@ func main() {
 		Width:  1024,
 		Height: 768,
 	})
-	wv.OpenDevTools()
-	appw.Event.OnApplicationEvent(events.Common.ApplicationStarted, func(event *application.ApplicationEvent) {
-		wv.OpenDevTools()
-	})
-
+	if debug {
+		appw.Event.OnApplicationEvent(events.Common.ApplicationStarted, func(event *application.ApplicationEvent) {
+			wv.OpenDevTools()
+		})
+	}
 	err = appw.Run()
 	if err != nil {
 		panic(err)
