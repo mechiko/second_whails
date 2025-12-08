@@ -200,23 +200,26 @@ func StartDialog(app domain.Apper, model *modeltrueclient.TrueClientModel) error
 									return
 								}
 								model.HashKey = mdlStore[idx].Hash
+								model.TokenGIS = ""
+								model.TokenSUZ = ""
 							}
 							err := ping(app, model)
+							// данные подлключения сохраняем только если пинг успешный
 							if err != nil {
-								utility.MessageBox("ошибка установки соединения", err.Error())
-								return
+								utility.MessageBox("ошибка", err.Error())
+							} else {
+								err := model.SyncToStore(app)
+								if err != nil {
+									utility.MessageBox("ошибка сохранения модели", err.Error())
+									return
+								}
+								err = app.SaveOptions()
+								if err != nil {
+									utility.MessageBox("ошибка сохранения модели в конфигурацию", err.Error())
+									return
+								}
+								dlg.Accept()
 							}
-							err = model.SyncToStore(app)
-							if err != nil {
-								utility.MessageBox("ошибка сохранения модели", err.Error())
-								return
-							}
-							err = app.SaveOptions()
-							if err != nil {
-								utility.MessageBox("ошибка сохранения модели в файл", err.Error())
-								return
-							}
-							dlg.Accept()
 						},
 					},
 					dcl.PushButton{

@@ -68,3 +68,8 @@ func (a *CisInfoModel) Model() domain.Model {
 func (a *CisInfoModel) Save(_ domain.Apper) (err error) {
 	return nil
 }
+
+// всегда возвращает true означает проверки нет всегда ок
+func (m *CisInfoModel) License() bool {
+	return true
+}

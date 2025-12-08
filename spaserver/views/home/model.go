@@ -62,3 +62,8 @@ func (a *HomeModel) Model() domain.Model {
 func (a *HomeModel) Save(_ domain.Apper) (err error) {
 	return nil
 }
+
+// всегда возвращает true означает проверки нет всегда ок
+func (m *HomeModel) License() bool {
+	return true
+}

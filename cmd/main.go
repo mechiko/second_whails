@@ -212,11 +212,11 @@ func main() {
 			if err != nil {
 				errProcessExit("Ошибка подключения к ЧЗ", err)
 			}
+			err = reductor.SetModel(modelTcl, false)
+			if err != nil {
+				errProcessExit("Ошибка сохранения модели в приложение", err)
+			}
 		}
-		// err = guiconnect.StartDialog(app, modelTcl)
-		// if err != nil {
-		// 	errProcessExit("Ошибка подключения к ЧЗ", err)
-		// }
 	}
 
 	// тут инициализируются так же модели для всех видов

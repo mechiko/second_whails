@@ -65,3 +65,8 @@ func (a *InnFiasModel) Model() domain.Model {
 func (a *InnFiasModel) Save(_ domain.Apper) (err error) {
 	return nil
 }
+
+// всегда возвращает true означает проверки нет всегда ок
+func (m *InnFiasModel) License() bool {
+	return true
+}

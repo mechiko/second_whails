@@ -9,7 +9,6 @@ import (
 type StatusBar struct {
 	model   domain.Model
 	Utm     bool
-	License bool
 	Scan    bool
 	FsrarID string
 }
@@ -35,7 +34,6 @@ func (m *StatusBar) SyncToStore(app domain.Apper) (err error) {
 // читаем состояние приложения
 func (m *StatusBar) ReadState(app domain.Apper, repo *repo.Repository) (err error) {
 	m.Utm = false
-	m.License = true
 	m.Scan = false
 	m.FsrarID = app.Options().Application.Fsrarid
 	return nil
@@ -53,4 +51,9 @@ func (a *StatusBar) Model() domain.Model {
 
 func (a *StatusBar) Save(_ domain.Apper) (err error) {
 	return nil
+}
+
+// всегда возвращает true означает проверки нет всегда ок
+func (m *StatusBar) License() bool {
+	return true
 }

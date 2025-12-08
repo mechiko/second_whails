@@ -5,7 +5,7 @@ import (
 	"korrectkm/domain"
 )
 
-type MenuModel struct {
+type HeaderModel struct {
 	IApp
 	Title string
 	Items MenuItemSlice
@@ -22,11 +22,11 @@ type MenuItem struct {
 
 type MenuItemSlice []*MenuItem
 
-var _ domain.Modeler = (*MenuModel)(nil)
+var _ domain.Modeler = (*HeaderModel)(nil)
 
 // создаем модель считываем ее состояние и возвращаем указатель
-func NewModel(app IApp) (*MenuModel, error) {
-	model := &MenuModel{
+func NewModel(app IApp) (*HeaderModel, error) {
+	model := &HeaderModel{
 		IApp:  app,
 		model: domain.Header,
 		Title: "Меню",
@@ -39,30 +39,30 @@ func NewModel(app IApp) (*MenuModel, error) {
 }
 
 // синхронизирует с приложением в сторону приложения из модели редуктора
-func (m *MenuModel) SyncToStore(app domain.Apper) (err error) {
+func (m *HeaderModel) SyncToStore(app domain.Apper) (err error) {
 	return err
 }
 
 // читаем состояние приложения
-func (m *MenuModel) ReadState(app domain.Apper) (err error) {
+func (m *HeaderModel) ReadState(app domain.Apper) (err error) {
 	return nil
 }
 
-func (m *MenuModel) Copy() (interface{}, error) {
+func (m *HeaderModel) Copy() (interface{}, error) {
 	// shallow copy that`s why fields is simple
 	dst := *m
 	return &dst, nil
 }
 
-func (a *MenuModel) Model() domain.Model {
+func (a *HeaderModel) Model() domain.Model {
 	return a.model
 }
 
-func (a *MenuModel) Save(_ domain.Apper) (err error) {
+func (a *HeaderModel) Save(_ domain.Apper) (err error) {
 	return nil
 }
 
-func (a *MenuModel) SyncActive(active string) error {
+func (a *HeaderModel) SyncActive(active string) error {
 	for _, m := range a.Items {
 		m.Active = false
 		if m.Name == active {
@@ -72,11 +72,16 @@ func (a *MenuModel) SyncActive(active string) error {
 	return nil
 }
 
-func (a *MenuModel) ActiveTitle() string {
+func (a *HeaderModel) ActiveTitle() string {
 	for _, m := range a.Items {
 		if m.Active {
 			return m.Desc
 		}
 	}
 	return ""
+}
+
+// всегда возвращает true означает проверки нет всегда ок
+func (m *HeaderModel) License() bool {
+	return true
 }

@@ -34,14 +34,14 @@ func (t *page) InitData(_ domain.Apper) (interface{}, error) {
 }
 
 func (t *page) PageData() (interface{}, error) {
-	return reductor.Model[*MenuModel](t.modelType)
+	return reductor.Model[*HeaderModel](t.modelType)
 }
 
 // с преобразованием
-func (t *page) PageModel() (model *MenuModel, err error) {
-	model, err = reductor.Model[*MenuModel](t.modelType)
+func (t *page) PageModel() (model *HeaderModel, err error) {
+	model, err = reductor.Model[*HeaderModel](t.modelType)
 	if err != nil {
-		return &MenuModel{}, fmt.Errorf("%w", err)
+		return &HeaderModel{}, fmt.Errorf("%w", err)
 	}
 	return model, nil
 }
@@ -50,7 +50,7 @@ func (t *page) PageModel() (model *MenuModel, err error) {
 func (t *page) ResetData() {
 }
 
-func (t *page) ModelUpdate(model *MenuModel) error {
+func (t *page) ModelUpdate(model *HeaderModel) error {
 	err := reductor.SetModel(model, false)
 	if err != nil {
 		return fmt.Errorf("kmstate page model update %w", err)

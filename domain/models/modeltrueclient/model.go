@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"korrectkm/domain"
 	"korrectkm/domain/mystore"
+	"korrectkm/licenser"
 	"korrectkm/repo"
 	"net/url"
 	"time"
@@ -157,4 +158,13 @@ func (a *TrueClientModel) Model() domain.Model {
 
 func (a *TrueClientModel) Save(_ domain.Apper) (err error) {
 	return nil
+}
+
+// проверяем лицензию здесь
+func (m *TrueClientModel) License() bool {
+	_, err := licenser.New(licenser.OmsID, m.OmsID)
+	if err != nil {
+		return false
+	}
+	return true
 }
