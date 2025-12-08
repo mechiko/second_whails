@@ -33,14 +33,14 @@ var StatusNameByAlias = func() map[string]string {
 }()
 
 var StatusExList = []Status{
-	{Alias: "IN_GRAY_ZONE", Name: "В Серой зоне", Actual: " APPLIED"},
+	{Alias: "IN_GRAY_ZONE", Name: "В Серой зоне", Actual: "APPLIED"},
 	{Alias: "EMPTY", Name: "отсутствует", Actual: ""},
 	{Alias: "RESERVED_NOT_USED", Name: "Зарезервировано. Не использовать", Actual: "INTRODUCED"},
 	{Alias: "INDIVIDUAL", Name: "КиЗ индивидуализирован,", Actual: "EMITTED, APPLIED"},
 	{Alias: "NON_INDIVIDUAL", Name: "Не индивидуализирован", Actual: "EMITTED, APPLIED"},
 	{Alias: "WAIT_SHIPMENT", Name: "Ожидает приёмку товара", Actual: "INTRODUCED"},
 	{Alias: "EXPORTED", Name: "Используется для документов экспорта", Actual: ""},
-	{Alias: "LOAN_RETIRED", Name: "Выведен из оборота по договору рассрочки", Actual: " ETIRED"},
+	{Alias: "LOAN_RETIRED", Name: "Выведен из оборота по договору рассрочки", Actual: "RETIRED"},
 	{Alias: "LOST_INVENTORY", Name: "Не найдены по итогу инвентаризации", Actual: "INTRODUCED"},
 	{Alias: "REMARK_RETIRED", Name: "Перемаркирован", Actual: "WRITTEN_OFF"},
 	{Alias: "WAIT_TRANSFER_TO_OWNER", Name: "Ожидает передачу собственнику", Actual: "INTRODUCED"},

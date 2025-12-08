@@ -62,11 +62,16 @@ var functions = template.FuncMap{
 		return filepath.Base(t)
 	},
 	"groupByID": func(id int) string {
-		m := domain.ProductGroupByID()
-		return m[id].Name
+		if g := domain.ProductGroupByIDs[id]; g != nil {
+			return g.Name
+		}
+		return ""
 	},
 	"groupByIDs": func(id int) string {
-		return domain.ProductGroupByIDs[id].Name
+		if g := domain.ProductGroupByIDs[id]; g != nil {
+			return g.Name
+		}
+		return ""
 	},
 	"fBalance": func(vol int) string {
 		return formatMoney(float64(vol) / 2)
@@ -113,7 +118,7 @@ func formatMoney(value float64) string {
 
 	// Assemble the final string
 	if isNegative {
-		return fmt.Sprintf("%s.%s", formattedDollars, formattedCents)
+		return fmt.Sprintf("-%s.%s", formattedDollars, formattedCents)
 	}
 	return fmt.Sprintf("%s.%s", formattedDollars, formattedCents)
 }

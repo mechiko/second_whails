@@ -39,7 +39,9 @@ func (t *page) Reset(c echo.Context) error {
 }
 
 func (t *page) Balance(c echo.Context) error {
-	t.balance()
+	if err := t.balance(); err != nil {
+		return t.ServerError(c, err)
+	}
 	data, err := t.PageData()
 	if err != nil {
 		return t.ServerError(c, err)

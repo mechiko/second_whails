@@ -203,7 +203,7 @@ func (t *page) utilLoad(c echo.Context) error {
 	util := c.FormValue("util")
 	utilId, err := strconv.Atoi(util)
 	if err != nil {
-		t.Logger().Errorf("order not number %w", err)
+		t.Logger().Errorf("utilisation report not number %w", err)
 		return t.ServerError(c, fmt.Errorf("введите число больше 0 ид отчета нанесения"))
 	}
 	rp, err := repo.GetRepository()
@@ -245,7 +245,7 @@ func (t *page) atkLoad(c echo.Context) error {
 	atk := c.FormValue("atk")
 	atkId, err := strconv.Atoi(atk)
 	if err != nil {
-		t.Logger().Errorf("order not number %w", err)
+		t.Logger().Errorf("atk not number %w", err)
 		return t.ServerError(c, fmt.Errorf("введите число больше 0 ид атк"))
 	}
 	rp, err := repo.GetRepository()
@@ -284,38 +284,17 @@ func (t *page) atkLoad(c echo.Context) error {
 }
 
 func (t *page) gtinLoad(c echo.Context) error {
-	gtin := c.FormValue("gtin")
-	rp, err := repo.GetRepository()
-	if err != nil {
-		return t.ServerError(c, err)
-	}
-	zn, err := rp.LockZnak()
-	if err != nil {
-		return t.ServerError(c, err)
-	}
-	defer func() {
-		rp.UnlockZnak(zn)
-	}()
-	model, err := t.PageModel()
-	if err != nil {
-		return t.ServerError(c, err)
-	}
-	model.Gtin = gtin
-	model.CisIn = nil
-	inCis, err := zn.GtinCodes(gtin)
-	if err != nil {
-		return t.ServerError(c, err)
-	}
-	model.CisIn = append(model.CisIn, inCis...)
-	if len(model.CisIn) == 0 {
-		return t.ServerError(c, fmt.Errorf("получено 0 КМ"))
-	}
-	err = reductor.SetModel(model, false)
-	if err != nil {
-		return t.ServerError(c, err)
-	}
-	if err := c.Render(http.StatusOK, t.Name(), t.RenderPageModel("page", model)); err != nil {
-		return t.ServerError(c, err)
-	}
-	return nil
+	return t.genericLoad(c, loaderConfig{
+		formField: "gtin",
+		errorMsg:  "введите GTIN",
+		updateModel: func(m *KmStateModel, val string) error {
+			m.Gtin = val
+			return nil
+		},
+		fetchCodes: func(val interface{}) ([]string, error) {
+			rp, _ := repo.GetRepository()
+			zn, _ := rp.LockZnak()
+			return zn.GtinCodes(val.(string))
+		},
+	})
 }

@@ -6,12 +6,9 @@ import (
 	"strings"
 )
 
-// const modError = "home"
-
 type page struct {
 	domain.IServer
-	modelType domain.Model
-	// name            string
+	modelType       domain.Model
 	defaultTemplate string
 	currentTemplate string
 	title           string

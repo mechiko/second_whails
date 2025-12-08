@@ -69,7 +69,7 @@ func (s *Server) loadViews() {
 	s.views[view4.ModelType()] = view4
 	view4.Routes()
 	view4.InitData(s)
-	// view index
+	// view root
 	view5 := root.New(s)
 	s.views[view5.ModelType()] = view5
 	// menu

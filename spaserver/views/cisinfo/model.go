@@ -56,8 +56,14 @@ func (m *CisInfoModel) ReadState(app domain.Apper) (err error) {
 }
 
 func (m *CisInfoModel) Copy() (interface{}, error) {
-	// shallow copy that`s why fields is simple
 	dst := *m
+	// Deep copy the map to avoid shared state
+	if m.MapInfo != nil {
+		dst.MapInfo = make(map[string]interface{}, len(m.MapInfo))
+		for k, v := range m.MapInfo {
+			dst.MapInfo[k] = v
+		}
+	}
 	return &dst, nil
 }
 

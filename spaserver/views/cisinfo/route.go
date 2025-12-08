@@ -42,19 +42,18 @@ func (t *page) Reset(c echo.Context) error {
 
 func (t *page) Info(c echo.Context) error {
 	cis := c.FormValue("cis")
+	// Обрезаем служебный разделитель GS1 (FNC1, 0x1D), если он есть.
+	if idx := strings.IndexByte(cis, '\x1D'); idx >= 0 {
+		cis = cis[:idx]
+	}
+
 	if cis == "" {
 		return t.ServerError(c, fmt.Errorf("пустой код"))
 	}
 	if len(cis) < 16 {
 		return t.ServerError(c, fmt.Errorf("мало знаков для кода"))
 	}
-	index := strings.IndexByte(cis, '\x1D')
-	if index > 0 {
-		cis = cis[:index]
-	}
-
-	err := t.info(cis)
-	if err != nil {
+	if err := t.info(cis); err != nil {
 		return t.ServerError(c, err)
 	}
 	data, err := t.PageData()

@@ -9,8 +9,6 @@ import (
 	"time"
 )
 
-var reentranceSearchFlag int64
-
 func (t *page) balance() error {
 	data, err := t.PageModel()
 	if err != nil {
@@ -29,6 +27,8 @@ func (t *page) balance() error {
 		return fmt.Errorf("%w", err)
 	}
 	data.Updated = time.Now()
-	reductor.SetModel(data, false)
+	if err := reductor.SetModel(data, false); err != nil {
+		return fmt.Errorf("set model: %w", err)
+	}
 	return nil
 }

@@ -152,7 +152,14 @@ func (s *Server) ActivePage() domain.Model {
 
 // устанавливает заголовок окна используется в Render
 func (s *Server) SetTitlePage(title string) {
-	window := s.Wails().Window.Current()
+	wailsApp := s.Wails()
+	if wailsApp == nil {
+		return
+	}
+	window := wailsApp.Window.Current()
+	if window == nil {
+		return
+	}
 	window.SetTitle(title)
 }
 
@@ -177,7 +184,14 @@ func (s *Server) Reload() {
 	if s.streamInfo != nil && s.streamInfo.Eventlog != nil {
 		s.streamInfo.Eventlog.Clear()
 	}
-	window := s.Wails().Window.Current()
+	wailsApp := s.Wails()
+	if wailsApp == nil {
+		return
+	}
+	window := wailsApp.Window.Current()
+	if window == nil {
+		return
+	}
 	window.Reload()
 }
 

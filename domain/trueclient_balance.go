@@ -80,5 +80,5 @@ func ProductGroupByAlias() map[string]*GroupNames {
 	for _, gr := range ProductGroupIDs {
 		out[gr.Alias] = gr
 	}
-	return nil
+	return out
 }

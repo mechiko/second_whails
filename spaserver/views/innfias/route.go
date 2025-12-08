@@ -3,6 +3,7 @@ package innfias
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 )
@@ -40,12 +41,11 @@ func (t *page) Reset(c echo.Context) error {
 }
 
 func (t *page) Info(c echo.Context) error {
-	inn := c.FormValue("inn")
+	inn := strings.TrimSpace(c.FormValue("inn"))
 	if inn == "" {
 		return t.ServerError(c, fmt.Errorf("inn is empty"))
 	}
-	err := t.info(inn)
-	if err != nil {
+	if err := t.info(inn); err != nil {
 		return t.ServerError(c, err)
 	}
 	data, err := t.PageData()
