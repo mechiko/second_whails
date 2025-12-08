@@ -59,7 +59,14 @@ var functions = template.FuncMap{
 		if t == "" {
 			return ""
 		}
-		return filepath.Base(t)
+		f := filepath.Base(t)
+		if len(f) < 40 {
+			return f
+		}
+		r := []rune(f)
+		lastN := string(r[len(r)-15:])
+		startN := string(r[:15])
+		return fmt.Sprintf("%s..%s", startN, lastN)
 	},
 	"groupByID": func(id int) string {
 		if g := domain.ProductGroupByIDs[id]; g != nil {
