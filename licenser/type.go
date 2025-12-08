@@ -47,7 +47,7 @@ type Licenser struct {
 var root = registry.CURRENT_USER
 
 // var nevakodKey = `Software\NevaKOD`
-var nameModuleKey = `Software\NevaKOD\KorrectKM`
+var nameModuleKey = `Software\NevaKOD\PdfPrinter`
 var nameLicenseKey = `license`
 var nameClientCertPubKey = `certpub`
 var nameClientCertPrivKey = `certpriv`

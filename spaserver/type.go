@@ -8,14 +8,11 @@ import (
 	"korrectkm/spaserver/templates"
 	"korrectkm/spaserver/views"
 	"korrectkm/sse"
+	"korrectkm/zaplog/zap4echo"
 	"net/http"
 	"sync"
 	"time"
 
-	"github.com/alexedwards/scs/v2"
-	session "github.com/canidam/echo-scs-session"
-	"github.com/donseba/go-htmx"
-	"github.com/karagenc/zap4echo"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"go.uber.org/zap"
@@ -33,20 +30,20 @@ type Server struct {
 	server          *echo.Echo
 	notify          chan error
 	shutdownTimeout time.Duration
-	sessionManager  *scs.SessionManager
-	debug           bool
-	private         *echo.Group
-	templates       templates.ITemplateUI
-	views           map[domain.Model]views.IView
-	menu            []domain.Model
-	activePage      domain.Model
-	defaultPage     string
-	flush           *FlushMsg
-	flushMu         sync.RWMutex
-	htmx            *htmx.HTMX
-	sseManager      *sse.Server
-	streamError     *sse.Stream
-	streamInfo      *sse.Stream
+	// sessionManager  *scs.SessionManager
+	debug       bool
+	private     *echo.Group
+	templates   templates.ITemplateUI
+	views       map[domain.Model]views.IView
+	menu        []domain.Model
+	activePage  domain.Model
+	defaultPage string
+	flush       *FlushMsg
+	flushMu     sync.RWMutex
+	// htmx        *htmx.HTMX
+	sseManager  *sse.Server
+	streamError *sse.Stream
+	streamInfo  *sse.Stream
 }
 
 // var sseManager *sse.Server
@@ -56,11 +53,11 @@ func New(a domain.Apper, eLogger *zap.Logger, port string, debug bool) *Server {
 	if port == "" {
 		addr = _defaultAddr
 	}
-	sess := scs.New()
-	sess.Lifetime = 24 * time.Hour
+	// sess := scs.New()
+	// sess.Lifetime = 24 * time.Hour
 	e := echo.New()
 	e.Use(
-		session.LoadAndSave(sess),
+		// session.LoadAndSave(sess),
 		zap4echo.Logger(eLogger),
 		zap4echo.Recover(eLogger),
 	)
@@ -85,12 +82,12 @@ func New(a domain.Apper, eLogger *zap.Logger, port string, debug bool) *Server {
 		shutdownTimeout: _defaultShutdownTimeout,
 		private:         private,
 		debug:           debug,
-		sessionManager:  sess,
-		views:           make(map[domain.Model]views.IView), // массив видов по нему находим шаблоны для рендера
-		menu:            make([]domain.Model, 0),
-		defaultPage:     "",
-		activePage:      domain.KMState,
-		htmx:            htmx.New(),
+		// sessionManager:  sess,
+		views:       make(map[domain.Model]views.IView), // массив видов по нему находим шаблоны для рендера
+		menu:        make([]domain.Model, 0),
+		defaultPage: "",
+		activePage:  domain.KMState,
+		// htmx:        htmx.New(),
 	}
 
 	e.Renderer = ss
@@ -137,9 +134,9 @@ func (s *Server) Handler() http.Handler {
 	return s.server
 }
 
-func (s *Server) SessionManager() *scs.SessionManager {
-	return s.sessionManager
-}
+// func (s *Server) SessionManager() *scs.SessionManager {
+// 	return s.sessionManager
+// }
 
 func (s *Server) Echo() *echo.Echo {
 	return s.server
@@ -184,9 +181,9 @@ func (s *Server) Reload() {
 	window.Reload()
 }
 
-func (s *Server) Htmx() *htmx.HTMX {
-	return s.htmx
-}
+// func (s *Server) Htmx() *htmx.HTMX {
+// 	return s.htmx
+// }
 
 func (s *Server) Menu() []domain.Model {
 	return s.menu

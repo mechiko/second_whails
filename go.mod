@@ -1,17 +1,11 @@
 module korrectkm
 
-go 1.24.0
+go 1.25.0
 
 require (
 	github.com/aglyzov/charmap v0.0.0-20240916203842-8463cca61eca
-	github.com/alexedwards/scs/v2 v2.8.0
-	github.com/canidam/echo-scs-session v1.0.0
-	github.com/donseba/go-htmx v1.12.0
 	github.com/google/uuid v1.6.0
-	github.com/justinas/nosurf v1.2.0
-	github.com/karagenc/zap4echo v0.1.1
 	github.com/labstack/echo/v4 v4.13.4
-	github.com/mechiko/barcode v1.0.0
 	github.com/mechiko/dbscan v0.0.0-20250824090424-a3ed3ef70222
 	github.com/mechiko/utility v0.0.0-20250901141646-cc9c20f08412
 	github.com/mechiko/walk v0.0.0-20230816210514-788aa73102d5
