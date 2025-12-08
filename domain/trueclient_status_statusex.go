@@ -36,7 +36,7 @@ var StatusExList = []Status{
 	{Alias: "IN_GRAY_ZONE", Name: "В Серой зоне", Actual: "APPLIED"},
 	{Alias: "EMPTY", Name: "отсутствует", Actual: ""},
 	{Alias: "RESERVED_NOT_USED", Name: "Зарезервировано. Не использовать", Actual: "INTRODUCED"},
-	{Alias: "INDIVIDUAL", Name: "КиЗ индивидуализирован,", Actual: "EMITTED, APPLIED"},
+	{Alias: "INDIVIDUAL", Name: "КиЗ индивидуализирован", Actual: "EMITTED, APPLIED"},
 	{Alias: "NON_INDIVIDUAL", Name: "Не индивидуализирован", Actual: "EMITTED, APPLIED"},
 	{Alias: "WAIT_SHIPMENT", Name: "Ожидает приёмку товара", Actual: "INTRODUCED"},
 	{Alias: "EXPORTED", Name: "Используется для документов экспорта", Actual: ""},
@@ -49,11 +49,11 @@ var StatusExList = []Status{
 	{Alias: "FTS_RESPOND_NOT_OK", Name: "Отрицательное решение ФТС", Actual: "APPLIED"},
 	{Alias: "FTS_RESPOND_WAITING", Name: "Ожидает подтверждение ФТС", Actual: "APPLIED"},
 	{Alias: "FTS_CONTROL", Name: "На контроле ФТС", Actual: "APPLIED"},
-	{Alias: "EAS_RESPOND_NOT_OK", Name: "Отрицательное решение ЕАЭС ", Actual: "RETIRED"},
-	{Alias: "EAS_RESPOND_WAITING", Name: "Ожидает подтверждение ЕАЭС ", Actual: "RETIRED"},
-	{Alias: "CONNECT_TAP", Name: "Подключён к оборудованию для розлива,", Actual: "INTRODUCED, RETIRED"},
+	{Alias: "EAS_RESPOND_NOT_OK", Name: "Отрицательное решение ЕАЭС", Actual: "RETIRED"},
+	{Alias: "EAS_RESPOND_WAITING", Name: "Ожидает подтверждение ЕАЭС", Actual: "RETIRED"},
+	{Alias: "CONNECT_TAP", Name: "Подключён к оборудованию для розлива", Actual: "INTRODUCED, RETIRED"},
 	{Alias: "PRIM_RESPONSE_WAITING", Name: "Обрабатывается", Actual: "INTRODUCED, APPLIED, RETIRED"},
-	{Alias: "MOVING_BY_UD", Name: "Отгружен ", Actual: "INTRODUCED"},
+	{Alias: "MOVING_BY_UD", Name: "Отгружен", Actual: "INTRODUCED"},
 }
 
 var StatusExNameByAlias = func() map[string]string {
