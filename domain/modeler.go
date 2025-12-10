@@ -28,11 +28,12 @@ const (
 	InnFias     Model = "innfias"
 	Money       Model = "money"
 	CisInfo     Model = "cisinfo"
+	Adjust      Model = "adjust"
 )
 
 func IsValidModel(s string) bool {
 	switch Model(s) {
-	case Application, TrueClient, StatusBar, NoPage, Header, Footer, Root, Home, KMState, Menu, InnFias, Money, CisInfo:
+	case Application, TrueClient, StatusBar, NoPage, Header, Footer, Root, Home, KMState, Menu, InnFias, Money, CisInfo, Adjust:
 		return true
 	default:
 		return false
@@ -42,33 +43,8 @@ func IsValidModel(s string) bool {
 // строка приводится в нижний регистр потом сравнивается
 func ModelFromString(s string) (Model, error) {
 	s = strings.ToLower(s)
-	switch s {
-	case string(Application):
-		return Application, nil
-	case string(TrueClient):
-		return TrueClient, nil
-	case string(StatusBar):
-		return StatusBar, nil
-	case string(NoPage):
-		return NoPage, nil
-	case string(Header):
-		return Header, nil
-	case string(Menu):
-		return Menu, nil
-	case string(Footer):
-		return Footer, nil
-	case string(Home):
-		return Home, nil
-	case string(Root):
-		return Root, nil
-	case string(KMState):
-		return KMState, nil
-	case string(InnFias):
-		return InnFias, nil
-	case string(Money):
-		return Money, nil
-	case string(CisInfo):
-		return CisInfo, nil
+	if IsValidModel(s) {
+		return Model(s), nil
 	}
 	return "", fmt.Errorf("%s ошибочная модель domain.Model", s)
 }

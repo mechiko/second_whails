@@ -2,6 +2,7 @@ package spaserver
 
 import (
 	"fmt"
+	"korrectkm/spaserver/views/adjust"
 	"korrectkm/spaserver/views/cisinfo"
 	"korrectkm/spaserver/views/footer"
 	"korrectkm/spaserver/views/header"
@@ -91,6 +92,11 @@ func (s *Server) loadViews() {
 	s.views[view9.ModelType()] = view9
 	view9.Routes()
 	view9.InitData(s)
+	// Adjust
+	view10 := adjust.New(s)
+	s.views[view10.ModelType()] = view10
+	view10.Routes()
+	view10.InitData(s)
 	// header инициализируем последним нужны все виды сервера в списке
 	view1.InitData(s)
 	view6.InitData(s)

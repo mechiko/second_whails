@@ -106,7 +106,7 @@ func (l *Licenser) startDialog() (out string, err error) {
 	}
 
 	if ret := dlg.Run(); ret != 1 {
-		return "", fmt.Errorf("отмена ввода лицензии", ret)
+		return "", fmt.Errorf("отмена ввода лицензии")
 	}
 	if out == "" {
 		return "", fmt.Errorf("пустое значение лицензии")

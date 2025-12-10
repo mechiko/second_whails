@@ -97,6 +97,7 @@ func New(a domain.Apper, eLogger *zap.Logger, port string, debug bool) *Server {
 	ss.menu = append(ss.menu, domain.InnFias)
 	ss.menu = append(ss.menu, domain.Money)
 	ss.menu = append(ss.menu, domain.CisInfo)
+	ss.menu = append(ss.menu, domain.Adjust)
 	ss.Routes()
 	ss.sseManager = sse.New()
 	ss.streamError = ss.sseManager.CreateStream("error")
