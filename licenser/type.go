@@ -64,6 +64,9 @@ var boxLocal *BoxKeys
 // для OmsID и FsrarID значение передаем здесь
 // CpuID и MAC вычисляются из функции по текущему компу
 func New(prm Param, prmValue string) (lic *Licenser, err error) {
+	if err := initBox(); err != nil {
+		return nil, fmt.Errorf("%w", err)
+	}
 	lic = &Licenser{
 		License:        &LicenseInfo{},
 		Parameter:      prm,

@@ -16,7 +16,7 @@ type KmStateModel struct {
 	CisIn               []string        // список CIS для запроса
 	Chunks              int             // куски
 	CisOut              domain.CisSlice // список CIS полученных
-	CisStatus           map[string]map[string]int
+	CisStatus           map[string]map[string]map[string]domain.CisSlice
 	ExcelChunkSize      int  // размер куска для выгрузки в файл ексель
 	IsConnectedTrueZnak bool // есть подключение к ЧЗ
 	IsTrueZnakA3        bool // подключена БД ЧЗ А3

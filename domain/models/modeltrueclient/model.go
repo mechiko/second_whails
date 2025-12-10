@@ -168,6 +168,10 @@ func (a *TrueClientModel) Save(_ domain.Apper) (err error) {
 
 // проверяем лицензию здесь
 func (m *TrueClientModel) License() bool {
+	// если омс ид пустой значит еще нет смысла проверять лицензию
+	if m.OmsID == "" {
+		return true
+	}
 	_, err := licenser.New(licenser.OmsID, m.OmsID)
 	if err != nil {
 		return false

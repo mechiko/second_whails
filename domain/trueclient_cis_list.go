@@ -5,9 +5,10 @@ import (
 )
 
 type Cis struct {
-	Cis      string
-	Status   string
-	StatusEx string
+	Cis          string
+	Status       string
+	StatusEx     string
+	ProducedDate string
 }
 
 type CisSlice []*Cis

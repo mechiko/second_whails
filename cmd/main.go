@@ -175,6 +175,11 @@ func main() {
 	if err != nil {
 		errProcessExit("Ошибка записи модели в редуктор", err)
 	}
+	// запрашиваем модель чтобы проверить лицензию при запуске
+	_, err = reductor.Model[*modeltrueclient.TrueClientModel](domain.TrueClient)
+	if err != nil {
+		errProcessExit("Ошибка", err)
+	}
 
 	group.Go(func() error {
 		go func() {

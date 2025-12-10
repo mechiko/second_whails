@@ -59,7 +59,7 @@ func (t *page) Search() {
 	}
 	chunkSize := 1000
 	chunks := slices.Chunk(data.CisIn, chunkSize)
-	cisStatus := make(map[string]map[string]int)
+	cisStatus := make(map[string]map[string]map[string]domain.CisSlice)
 	cisOut := make(domain.CisSlice, 0)
 	// start := time.Now()
 	deltaProgressChunk := float64(100)
@@ -88,6 +88,10 @@ func (t *page) Search() {
 		// 	}
 		for _, cisItem := range cisResponce {
 			// status := domain.DictCisTypes(cisItem.Result.Status)
+			producedDate := cisItem.Result.ProducedDate.Format("2006-01-02")
+			if cisItem.Result.ProducedDate.IsZero() {
+				producedDate = "отсутствует"
+			}
 			status := domain.StatusNameByAlias[strings.ToLower(cisItem.Result.Status)]
 			if status == "" {
 				status = strings.ToLower(cisItem.Result.Status)
@@ -103,10 +107,17 @@ func (t *page) Search() {
 				statusEx = strings.ToLower(cisItem.ErrorCode)
 			}
 			if cisStatus[status] == nil {
-				cisStatus[status] = make(map[string]int)
+				cisStatus[status] = make(map[string]map[string]domain.CisSlice)
 			}
-			cisStatus[status][statusEx]++
-			cisOut = append(cisOut, &domain.Cis{Cis: cisItem.Result.Cis, Status: status, StatusEx: statusEx})
+			if cisStatus[status][producedDate] == nil {
+				cisStatus[status][producedDate] = make(map[string]domain.CisSlice)
+			}
+			if cisStatus[status][producedDate][statusEx] == nil {
+				cisStatus[status][producedDate][statusEx] = make(domain.CisSlice, 0)
+			}
+			newCis := &domain.Cis{Cis: cisItem.Result.Cis, Status: status, StatusEx: statusEx, ProducedDate: producedDate}
+			cisStatus[status][producedDate][statusEx] = append(cisStatus[status][producedDate][statusEx], newCis)
+			cisOut = append(cisOut, newCis)
 		}
 		progress += deltaProgressChunk
 		data.Progress = int(progress)
