@@ -1,0 +1,13 @@
+<div class="p-2 w-full">
+  <div>Поиск КМ в ЧЗ</div>
+  <div class="px-2 pb-2 pt-2 flex gap-4 bg-white text-base shadow-lg">
+    <button
+      class="focus:shadow-outline rounded-md border-2 border-gray-500 px-1 py-0.5 font-medium text-gray-900 hover:bg-gray-700 hover:text-white focus:outline-none"
+      hx-indicator="#ind1" hx-get="/target/balance" hx-trigger="click" hx-target="#target" hx-swap="innerHTML">
+      Получить Баланс
+    </button>
+  </div>
+  <div id="target">
+    {{ template "balance" . }}
+  </div>
+</div>

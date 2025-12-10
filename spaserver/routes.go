@@ -12,6 +12,7 @@ import (
 	"korrectkm/spaserver/views/menu"
 	"korrectkm/spaserver/views/money"
 	"korrectkm/spaserver/views/root"
+	"korrectkm/spaserver/views/target"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -97,6 +98,11 @@ func (s *Server) loadViews() {
 	s.views[view10.ModelType()] = view10
 	view10.Routes()
 	view10.InitData(s)
+	// Target
+	view11 := target.New(s)
+	s.views[view11.ModelType()] = view11
+	view11.Routes()
+	view11.InitData(s)
 	// header инициализируем последним нужны все виды сервера в списке
 	view1.InitData(s)
 	view6.InitData(s)
