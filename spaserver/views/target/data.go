@@ -29,7 +29,7 @@ func (t *page) ResetValidateData() {
 func (t *page) ModelUpdate(model *TargetModel) error {
 	err := reductor.SetModel(model, false)
 	if err != nil {
-		return fmt.Errorf("kmstate page model update %w", err)
+		return fmt.Errorf("target page model update %w", err)
 	}
 	return nil
 }

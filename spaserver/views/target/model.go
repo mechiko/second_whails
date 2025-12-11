@@ -8,10 +8,14 @@ import (
 )
 
 type TargetModel struct {
-	model   domain.Model
-	Title   string
-	Balance *domain.Balance
-	Updated time.Time
+	model      domain.Model
+	Title      string
+	Filter     domain.TargetFilter
+	TargetCis  []domain.TargetCis
+	Updated    time.Time
+	Progress   int   // прогресс опроса
+	IsProgress bool  // true если идет процесс загрузки для отображения прогресса
+	Error      error // массив ошибок
 }
 
 var _ domain.Modeler = (*TargetModel)(nil)
@@ -19,10 +23,18 @@ var _ domain.Modeler = (*TargetModel)(nil)
 // создаем модель считываем ее состояние и возвращаем указатель
 func NewModel(app domain.Apper) (*TargetModel, error) {
 	model := &TargetModel{
-		model:   domain.Target,
-		Title:   "Информация по ИНН",
-		Balance: &domain.Balance{},
-		Updated: time.Time{},
+		model:     domain.Target,
+		Title:     "Информация по ИНН",
+		TargetCis: make([]domain.TargetCis, 0),
+		Updated:   time.Time{},
+		Filter: domain.TargetFilter{
+			Pagination: domain.FilterPagination{
+				PerPage:          1000,
+				LastEmissionDate: "2025-12-10T22:00:00.000Z",
+				Direction:        0,
+				Sgtin:            "000000000000000000000",
+			},
+		},
 	}
 	if err := model.ReadState(app); err != nil {
 		return nil, fmt.Errorf("model %v read state %w", model.model, err)
