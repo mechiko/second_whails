@@ -26,7 +26,7 @@ func Model[T domain.Modeler](src domain.Model) (T, error) {
 			}
 			// добавим проверку Licenser
 			if !returnModel.License() {
-				return resultNil, fmt.Errorf("reductor license model")
+				return resultNil, fmt.Errorf("ошибка лицензии, перезапустите программу")
 			}
 			return returnModel, nil
 		}

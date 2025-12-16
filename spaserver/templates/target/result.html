@@ -1,25 +1,9 @@
 {{if not $.Updated.IsZero}}
 <div class="m-1">Обновлено {{ddmmyyhhmmss $.Updated}}</div>
-<div class="h-[calc(100vh-10rem)] overflow-y-auto w-full">
-    <table class="table-auto ml-2 mt-1">
-      <col style="width:60%">
-      <col style="width:30%">
-      <col style="width:20%">
-      <col />
-      <thead class="sticky top-0 bg-white z-10 h-6">
-        <tr>
-          <th class="text-left p-1">Товарная группа</th>
-          <th>Баланс</th>
-        </tr>
-      </thead>
-      <tbody>
-{{range $i, $b := $.Balance}}
-      <tr class="text-base">
-        <td class="pl-1 border text-left">{{groupByIDs $b.ProductGroupID}}</td>
-        <td class="pl-1 border text-center">{{fBalance $b.Balance}}</td>
-      </tr>
-{{end}}
-      </tbody>
-    </table>
-  </div>
+<div>Получено: {{len $.TargetCis}} КМ</div>
+<button 
+  class="focus:shadow-outline rounded-md border-2 border-gray-500 px-1 py-0.5 font-medium text-gray-900 hover:bg-gray-700 hover:text-white focus:outline-none" 
+  hx-get="/target/tostatus" hx-trigger="click" hx-target="this" hx-swap="none">
+  Опросить КМ
+</button>
 {{end}}

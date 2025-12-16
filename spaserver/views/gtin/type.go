@@ -1,4 +1,4 @@
-package target
+package gtin
 
 import (
 	_ "embed"
@@ -21,11 +21,11 @@ type page struct {
 func New(app domain.IServer) *page {
 	t := &page{
 		IServer:         app,
-		modelType:       domain.Target,
+		modelType:       domain.Gtin,
 		defaultTemplate: "index",
 		currentTemplate: "index",
-		title:           "Выборка по фильтру",
-		description:     "Выборка по фильтру",
+		title:           "GTIN",
+		description:     "GTIN",
 	}
 	return t
 }

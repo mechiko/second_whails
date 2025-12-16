@@ -60,18 +60,26 @@ var ProductGroupByIDs = func() map[int]*GroupNames {
 	return out
 }()
 
-func ProductGroupByID() map[int]*GroupNames {
-	out := map[int]*GroupNames{}
-	for _, gr := range ProductGroupIDs {
-		out[gr.ID] = gr
-	}
-	return out
-}
-
-func ProductGroupByAlias() map[string]*GroupNames {
+var ProductGroupByAlias = func() map[string]*GroupNames {
 	out := map[string]*GroupNames{}
 	for _, gr := range ProductGroupIDs {
 		out[gr.Alias] = gr
 	}
 	return out
-}
+}()
+
+// func ProductGroupByID() map[int]*GroupNames {
+// 	out := map[int]*GroupNames{}
+// 	for _, gr := range ProductGroupIDs {
+// 		out[gr.ID] = gr
+// 	}
+// 	return out
+// }
+
+// func ProductGroupByAlias() map[string]*GroupNames {
+// 	out := map[string]*GroupNames{}
+// 	for _, gr := range ProductGroupIDs {
+// 		out[gr.Alias] = gr
+// 	}
+// 	return out
+// }

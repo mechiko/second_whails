@@ -10,6 +10,9 @@ import (
 type TargetModel struct {
 	model      domain.Model
 	Title      string
+	Gtin       string
+	Pg         string
+	CisStatus  map[string][]domain.TargetCis
 	Filter     domain.TargetFilter
 	TargetCis  []domain.TargetCis
 	Updated    time.Time
@@ -24,7 +27,7 @@ var _ domain.Modeler = (*TargetModel)(nil)
 func NewModel(app domain.Apper) (*TargetModel, error) {
 	model := &TargetModel{
 		model:     domain.Target,
-		Title:     "Информация по ИНН",
+		Title:     "Выборка по фильтру",
 		TargetCis: make([]domain.TargetCis, 0),
 		Updated:   time.Time{},
 		Filter: domain.TargetFilter{
@@ -82,4 +85,12 @@ func (a *TargetModel) Save(_ domain.Apper) (err error) {
 // всегда возвращает true означает проверки нет всегда ок
 func (m *TargetModel) License() bool {
 	return true
+}
+
+func (m *TargetModel) Pgs() map[string]string {
+	mm := map[string]string{}
+	for k, v := range domain.ProductGroupByAlias {
+		mm[k] = v.Name
+	}
+	return mm
 }

@@ -24,8 +24,8 @@ func New(app domain.IServer) *page {
 		modelType:       domain.Adjust,
 		defaultTemplate: "index",
 		currentTemplate: "index",
-		title:           "Инфо о балансе",
-		description:     "Инфо о балансе",
+		title:           "Корректировка(в разработке)",
+		description:     "Корректировка(в разработке)",
 	}
 	return t
 }

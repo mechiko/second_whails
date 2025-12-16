@@ -1,7 +1,5 @@
 package domain
 
-import "time"
-
 var TargetDateLayout = "2006-01-02T15:04:05.999Z"
 
 type FilterPeriod struct {
@@ -62,14 +60,14 @@ type Result struct {
 	Gtin               string        `json:"gtin"`
 	ProducerInn        string        `json:"producerInn"`
 	Status             string        `json:"status"`
-	EmissionDate       time.Time     `json:"emissionDate"`
+	EmissionDate       string        `json:"emissionDate"`
 	GeneralPackageType string        `json:"generalPackageType"`
 	OwnerInn           string        `json:"ownerInn"`
 	EmissionType       string        `json:"emissionType"`
 	ProductGroup       string        `json:"productGroup"`
 	HaveChildren       bool          `json:"haveChildren"`
 	EliminationReason  string        `json:"eliminationReason"`
-	ReceiptDate        time.Time     `json:"receiptDate"`
+	ReceiptDate        string        `json:"receiptDate"`
 	Expiration         []interface{} `json:"expiration"`
 	OrderID            string        `json:"orderId"`
 	ModInfo            ModInfo       `json:"modInfo"`

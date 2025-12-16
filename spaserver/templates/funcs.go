@@ -68,8 +68,8 @@ var functions = template.FuncMap{
 		startN := string(r[:15])
 		return fmt.Sprintf("%s..%s", startN, lastN)
 	},
-	"groupByID": func(id int) string {
-		if g := domain.ProductGroupByIDs[id]; g != nil {
+	"groupByName": func(alias string) string {
+		if g := domain.ProductGroupByAlias[alias]; g != nil {
 			return g.Name
 		}
 		return ""

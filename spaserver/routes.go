@@ -5,6 +5,7 @@ import (
 	"korrectkm/spaserver/views/adjust"
 	"korrectkm/spaserver/views/cisinfo"
 	"korrectkm/spaserver/views/footer"
+	"korrectkm/spaserver/views/gtin"
 	"korrectkm/spaserver/views/header"
 	"korrectkm/spaserver/views/home"
 	"korrectkm/spaserver/views/innfias"
@@ -103,6 +104,11 @@ func (s *Server) loadViews() {
 	s.views[view11.ModelType()] = view11
 	view11.Routes()
 	view11.InitData(s)
+	// Gtin
+	view12 := gtin.New(s)
+	s.views[view12.ModelType()] = view12
+	view12.Routes()
+	view12.InitData(s)
 	// header инициализируем последним нужны все виды сервера в списке
 	view1.InitData(s)
 	view6.InitData(s)

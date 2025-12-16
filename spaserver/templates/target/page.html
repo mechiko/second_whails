@@ -1,17 +1,27 @@
 <div id="page" class="p-2 w-full">
-{{if $.IsProgress}}
-{{ template "progress" . }}
-{{else}}
   <div>Поиск КМ по фильтру</div>
   <div class="bg-white shadow-lg rounded px-2 pt-2 pb-2 mb-2">
     <span class="text-base">Фильтр:</span>
     <form class="p-0 m-1" hx-post='/target/scan' hx-target="#page" hx-swap="innerHTML">
-      <input value="" class="text-sm border border-gray-300 rounded-sm py-1 px-1 focus:border-blue-500 focus:outline-none"
+    <select class="appearance-none w-full mb-1 py-1 px-2 bg-white border border-gray-300 rounded-sm" name="pg" id="pg">
+      <option value="">выбери группу&hellip;</option>
+  {{ range $j, $row := $.Pgs }}
+  {{if eq $.Pg $j}}
+            <option value="{{$j}}" selected>{{$row}}</option>
+  {{else}}          
+            <option value="{{$j}}">{{$row}}</option>
+  {{end}}
+  {{end}}
+    </select>
+      <input value="{{$.Gtin}}" class="text-sm border border-gray-300 rounded-sm py-1 px-1 focus:border-blue-500 focus:outline-none"
         type="text" placeholder="GTIN" name='gtin' />
-      <input id="sbmtOrder" type="submit" value="Сканировать"
+      <input id="sbmtOrder" type="submit" value="Запросить"
         class="border-2 border-gray-500 hover:bg-gray-700 text-gray-700 hover:text-white py-0.5 px-1 rounded focus:outline-none focus:shadow-outline" />
     </form>
   </div>
+{{if $.IsProgress}}
+{{ template "progress" . }}
+{{else}}
 <div id="progress"></div>
 {{end}}
   <div id="target">

@@ -1,0 +1,16 @@
+{{if not $.Updated.IsZero}}
+<div class="m-1">Обновлено {{ddmmyyhhmmss $.Updated}}</div>
+<div class="">
+    <table class="table-auto ml-2 mb-1 mt-1">
+      <tbody>
+      <tr class="text-base">
+        <td class="p-1 border font-bold text-left">Наименование</td>
+        <td class="p-1 pl-2 border text-left">{{$.Info.Name}}</td>
+      </tr>
+      </tbody>
+    </table>
+<div class="h-[calc(100vh-16rem)] overflow-y-auto w-full text-xs select-text">
+<pre>{{$.Json}}</pre>
+</div>
+</div>
+{{end}}

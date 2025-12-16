@@ -1,0 +1,14 @@
+<div id="page" class="p-2 w-full">
+  <div class="select-text">Инфо по GTIN 04603744398042</div>
+  <div class="bg-white shadow-lg rounded px-2 pt-2 pb-2 mb-2">
+    <form class="p-0 m-1" hx-post='/gtin/scan' hx-target="#page" hx-swap="innerHTML">
+      <input value="" class="text-sm border border-gray-300 rounded-sm py-1 px-1 focus:border-blue-500 focus:outline-none"
+        type="text" placeholder="GTIN" name='gtin' />
+      <input id="sbmtOrder" type="submit" value="Запросить"
+        class="border-2 border-gray-500 hover:bg-gray-700 text-gray-700 hover:text-white py-0.5 px-1 rounded focus:outline-none focus:shadow-outline" />
+    </form>
+  </div>
+  <div id="target">
+    {{ template "result" . }}
+  </div>
+</div>

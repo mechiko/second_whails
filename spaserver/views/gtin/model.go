@@ -1,4 +1,4 @@
-package adjust
+package gtin
 
 import (
 	"fmt"
@@ -7,21 +7,24 @@ import (
 	"time"
 )
 
-type AdjustModel struct {
-	model   domain.Model
-	Title   string
-	Balance *domain.Balance
-	Updated time.Time
+type TargetModel struct {
+	model      domain.Model
+	Title      string
+	Updated    time.Time
+	Info       domain.GtinInfo
+	Json       string
+	Progress   int   // прогресс опроса
+	IsProgress bool  // true если идет процесс загрузки для отображения прогресса
+	Error      error // массив ошибок
 }
 
-var _ domain.Modeler = (*AdjustModel)(nil)
+var _ domain.Modeler = (*TargetModel)(nil)
 
 // создаем модель считываем ее состояние и возвращаем указатель
-func NewModel(app domain.Apper) (*AdjustModel, error) {
-	model := &AdjustModel{
-		model:   domain.Adjust,
-		Title:   "Корректировка",
-		Balance: &domain.Balance{},
+func NewModel(app domain.Apper) (*TargetModel, error) {
+	model := &TargetModel{
+		model:   domain.Gtin,
+		Title:   "GTIN",
 		Updated: time.Time{},
 	}
 	if err := model.ReadState(app); err != nil {
@@ -44,30 +47,30 @@ func (t *page) InitData(app domain.Apper) (interface{}, error) {
 }
 
 // синхронизирует с приложением в сторону приложения из модели редуктора
-func (m *AdjustModel) SyncToStore(_ domain.Apper) (err error) {
+func (m *TargetModel) SyncToStore(_ domain.Apper) (err error) {
 	return err
 }
 
 // читаем состояние приложения
-func (m *AdjustModel) ReadState(app domain.Apper) (err error) {
+func (m *TargetModel) ReadState(app domain.Apper) (err error) {
 	return nil
 }
 
-func (m *AdjustModel) Copy() (interface{}, error) {
+func (m *TargetModel) Copy() (interface{}, error) {
 	// shallow copy that`s why fields is simple
 	dst := *m
 	return &dst, nil
 }
 
-func (a *AdjustModel) Model() domain.Model {
+func (a *TargetModel) Model() domain.Model {
 	return a.model
 }
 
-func (a *AdjustModel) Save(_ domain.Apper) (err error) {
+func (a *TargetModel) Save(_ domain.Apper) (err error) {
 	return nil
 }
 
 // всегда возвращает true означает проверки нет всегда ок
-func (m *AdjustModel) License() bool {
+func (m *TargetModel) License() bool {
 	return true
 }

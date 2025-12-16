@@ -30,11 +30,12 @@ const (
 	CisInfo     Model = "cisinfo"
 	Adjust      Model = "adjust"
 	Target      Model = "target"
+	Gtin        Model = "gtin"
 )
 
 func IsValidModel(s string) bool {
 	switch Model(s) {
-	case Application, TrueClient, StatusBar, NoPage, Header, Footer, Root, Home, KMState, Menu, InnFias, Money, CisInfo, Adjust, Target:
+	case Application, TrueClient, StatusBar, NoPage, Header, Footer, Root, Home, KMState, Menu, InnFias, Money, CisInfo, Adjust, Target, Gtin:
 		return true
 	default:
 		return false
