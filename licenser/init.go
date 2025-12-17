@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 
+	"golang.design/x/clipboard"
 	"golang.org/x/crypto/nacl/box"
 )
 
@@ -12,6 +13,10 @@ import (
 // иначе не будет работать потом
 // генерируем ключевую пару
 func init() {
+	err := clipboard.Init()
+	if err != nil {
+		panic(err)
+	}
 	boxLocal = &BoxKeys{
 		ServerPub: serverCertPub,
 	}

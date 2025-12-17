@@ -2,7 +2,6 @@ package target
 
 import (
 	"errors"
-	"fmt"
 	"korrectkm/domain"
 	"korrectkm/reductor"
 	"korrectkm/spaserver/views/kmstate"
@@ -121,7 +120,7 @@ func (t *page) progress(c echo.Context) error {
 func (t *page) toStatus(c echo.Context) error {
 	modelDst, err := kmstate.NewModel(t)
 	if err != nil {
-		return fmt.Errorf("%w", err)
+		return t.ServerError(c, err)
 	}
 	data, err := t.PageModel()
 	if err != nil {
@@ -133,16 +132,16 @@ func (t *page) toStatus(c echo.Context) error {
 	}
 	err = reductor.SetModel(modelDst, false)
 	if err != nil {
-		return fmt.Errorf("target page model update %w", err)
+		return t.ServerError(c, err)
 	}
 	modelMenu, err := reductor.Model[*menu.MenuModel](domain.Menu, t)
 	if err != nil {
-		return fmt.Errorf("%w", err)
+		return t.ServerError(c, err)
 	}
 	modelMenu.SyncActive(string(domain.KMState))
 	err = reductor.SetModel(modelMenu, false)
 	if err != nil {
-		return fmt.Errorf("target page model update %w", err)
+		return t.ServerError(c, err)
 	}
 	t.SetActivePage(domain.KMState)
 	t.Reload()

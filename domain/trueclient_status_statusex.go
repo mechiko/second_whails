@@ -62,7 +62,7 @@ var StatusExNameByAlias = func() map[string]string {
 		if gr.Actual != "" {
 			out[strings.ToLower(gr.Alias)] = fmt.Sprintf("%s [%s]", gr.Name, gr.Actual)
 		} else {
-			out[strings.ToLower(gr.Alias)] = fmt.Sprintf("%s", gr.Name)
+			out[strings.ToLower(gr.Alias)] = gr.Name
 		}
 	}
 	return out

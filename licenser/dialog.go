@@ -4,8 +4,10 @@ import (
 	"encoding/base64"
 	"fmt"
 
+	"github.com/mechiko/utility"
 	"github.com/mechiko/walk"
 	dcl "github.com/mechiko/walk/declarative"
+	"golang.design/x/clipboard"
 )
 
 func (l *Licenser) startDialog() (out string, err error) {
@@ -50,7 +52,8 @@ func (l *Licenser) startDialog() (out string, err error) {
 								AssignTo: &acceptPB,
 								Text:     "Copy",
 								OnClicked: func() {
-									walk.Clipboard().SetText(encoded64)
+									clipboard.Write(clipboard.FmtText, []byte(encoded64))
+									// walk.Clipboard().SetText(encoded64)
 								},
 							},
 							dcl.HSpacer{},
@@ -72,8 +75,14 @@ func (l *Licenser) startDialog() (out string, err error) {
 								AssignTo: &acceptPB,
 								Text:     "Paste",
 								OnClicked: func() {
-									txt, _ := walk.Clipboard().Text()
-									responce.SetText(txt)
+									data := clipboard.Read(clipboard.FmtText)
+									if data == nil {
+										utility.MessageBox("ошибка", "Clipboard is empty or does not contain text data")
+										return
+									}
+									responce.SetText(string(data))
+									// txt, _ := walk.Clipboard().Text()
+									// responce.SetText(txt)
 								},
 							},
 							dcl.HSpacer{},

@@ -11,7 +11,7 @@ func (t *page) Routes() error {
 	base := "/" + t.modelType.String()
 	t.Echo().GET(base, t.Index)
 	t.Echo().GET(base+"/reset", t.Reset)
-	t.Echo().GET(base+"/balance", t.Balance)
+	t.Echo().POST(base+"/adjust", t.adjust)
 	return nil
 }
 
@@ -38,10 +38,7 @@ func (t *page) Reset(c echo.Context) error {
 	return nil
 }
 
-func (t *page) Balance(c echo.Context) error {
-	if err := t.balance(); err != nil {
-		return t.ServerError(c, err)
-	}
+func (t *page) adjust(c echo.Context) error {
 	data, err := t.PageData()
 	if err != nil {
 		return t.ServerError(c, err)

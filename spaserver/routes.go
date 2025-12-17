@@ -17,7 +17,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/mechiko/walk"
+	"golang.design/x/clipboard"
 )
 
 // маршрутизация приложения
@@ -126,7 +126,8 @@ func (s *Server) Index(c echo.Context) error {
 
 func (s *Server) copy(c echo.Context) error {
 	value := c.Param("value")
-	walk.Clipboard().SetText(value)
+	clipboard.Write(clipboard.FmtText, []byte(value))
+	// walk.Clipboard().SetText(value)
 	// s.SetFlush("инфо", fmt.Sprintf("значение %s скопировано", value))
 	s.SetFlush("скопировано в буфер значение "+value, "info")
 	return c.String(200, "")

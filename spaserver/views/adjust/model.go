@@ -10,7 +10,9 @@ import (
 type AdjustModel struct {
 	model   domain.Model
 	Title   string
-	Balance *domain.Balance
+	File    string
+	CisIn   []string // список CIS для запроса
+	Chunks  int      // куски
 	Updated time.Time
 }
 
@@ -21,7 +23,7 @@ func NewModel(app domain.Apper) (*AdjustModel, error) {
 	model := &AdjustModel{
 		model:   domain.Adjust,
 		Title:   "Корректировка",
-		Balance: &domain.Balance{},
+		CisIn:   make([]string, 0),
 		Updated: time.Time{},
 	}
 	if err := model.ReadState(app); err != nil {
