@@ -64,6 +64,6 @@ func (a *HomeModel) Save(_ domain.Apper) (err error) {
 }
 
 // всегда возвращает true означает проверки нет всегда ок
-func (m *HomeModel) License() bool {
+func (m *HomeModel) License(_ domain.Apper) bool {
 	return true
 }

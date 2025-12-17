@@ -4,5 +4,5 @@ import (
 	"embed"
 )
 
-//go:embed header footer home root kmstate adjust cisinfo menu money target gtin
+//go:embed *
 var root embed.FS

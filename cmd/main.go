@@ -159,12 +159,14 @@ func main() {
 	if err != nil {
 		errProcessExit("Ошибка получения репозитория", err)
 	}
+	loger.Infof("config.db:%v", repoStart.Is(dbscan.Config))
 
 	// создаем редуктор с новой моделью
 	modelTcl, err := modeltrueclient.New(app)
 	if err != nil {
 		errProcessExit("Ошибка создания модели TrueClientModel", err)
 	}
+	loger.Info("model omsid:%s", modelTcl.OmsID)
 	// загружаем сертификаты пользователя
 	err = modelTcl.LoadStore(app)
 	if err != nil {
@@ -176,7 +178,7 @@ func main() {
 		errProcessExit("Ошибка записи модели в редуктор", err)
 	}
 	// запрашиваем модель чтобы проверить лицензию при запуске
-	_, err = reductor.Model[*modeltrueclient.TrueClientModel](domain.TrueClient)
+	_, err = reductor.Model[*modeltrueclient.TrueClientModel](domain.TrueClient, app)
 	if err != nil {
 		errProcessExit("Ошибка", err)
 	}

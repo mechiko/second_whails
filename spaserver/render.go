@@ -87,13 +87,14 @@ func (s *Server) renderToWriter(w io.Writer, name string, data interface{}) erro
 		s.Logger().Errorf("нет такого вида %s", name)
 	}
 	if s.debug {
+		// if err := s.templates.Render(w, nameType, subName, model); err != nil {
 		if err := s.templates.RenderDebug(w, nameType, subName, model); err != nil {
-			s.Logger().Errorf("render debug %s", err.Error())
+			s.Logger().Errorf("render debug %s %s %s", nameType, subName, err.Error())
 			return err
 		}
 	} else {
 		if err := s.templates.Render(w, nameType, subName, model); err != nil {
-			s.Logger().Errorf("render %s", err.Error())
+			s.Logger().Errorf("render %s %s %s", nameType, subName, err.Error())
 			return err
 		}
 	}

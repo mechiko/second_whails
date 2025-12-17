@@ -68,6 +68,6 @@ func (a *AdjustModel) Save(_ domain.Apper) (err error) {
 }
 
 // всегда возвращает true означает проверки нет всегда ок
-func (m *AdjustModel) License() bool {
+func (m *AdjustModel) License(_ domain.Apper) bool {
 	return true
 }

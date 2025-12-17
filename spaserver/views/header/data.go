@@ -34,12 +34,12 @@ func (t *page) InitData(_ domain.Apper) (interface{}, error) {
 }
 
 func (t *page) PageData() (interface{}, error) {
-	return reductor.Model[*HeaderModel](t.modelType)
+	return reductor.Model[*HeaderModel](t.modelType, t)
 }
 
 // с преобразованием
 func (t *page) PageModel() (model *HeaderModel, err error) {
-	model, err = reductor.Model[*HeaderModel](t.modelType)
+	model, err = reductor.Model[*HeaderModel](t.modelType, t)
 	if err != nil {
 		return &HeaderModel{}, fmt.Errorf("%w", err)
 	}

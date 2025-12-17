@@ -34,7 +34,7 @@ func (t *page) Reset(c echo.Context) error {
 }
 
 func (t *page) license(c echo.Context) error {
-	tcModel, err := reductor.Model[*modeltrueclient.TrueClientModel](domain.TrueClient)
+	tcModel, err := reductor.Model[*modeltrueclient.TrueClientModel](domain.TrueClient, t)
 	if err != nil {
 		return t.ServerError(c, err)
 	}

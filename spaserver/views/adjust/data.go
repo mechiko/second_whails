@@ -6,13 +6,13 @@ import (
 )
 
 func (t *page) PageData() (interface{}, error) {
-	return reductor.Model[*AdjustModel](t.modelType)
+	return reductor.Model[*AdjustModel](t.modelType, t)
 }
 
 // с преобразованием
 func (t *page) PageModel() (model *AdjustModel, err error) {
 	// model, err := reductor.Instance().Model(t.modelType)
-	model, err = reductor.Model[*AdjustModel](t.modelType)
+	model, err = reductor.Model[*AdjustModel](t.modelType, t)
 	if err != nil {
 		return &AdjustModel{}, fmt.Errorf("%w", err)
 	}

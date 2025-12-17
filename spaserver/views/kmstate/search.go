@@ -45,7 +45,7 @@ func (t *page) Search() {
 			utility.MessageBox("ошибка программы", err.Error())
 		}
 	}()
-	mtcl, err := reductor.Model[*modeltrueclient.TrueClientModel](domain.TrueClient)
+	mtcl, err := reductor.Model[*modeltrueclient.TrueClientModel](domain.TrueClient, t)
 	if err != nil {
 		t.Logger().Errorf("page:kmstate:search reductor.Model %v", err)
 		data.Errors = append(data.Errors, err.Error())

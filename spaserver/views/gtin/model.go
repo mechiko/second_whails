@@ -71,6 +71,6 @@ func (a *TargetModel) Save(_ domain.Apper) (err error) {
 }
 
 // всегда возвращает true означает проверки нет всегда ок
-func (m *TargetModel) License() bool {
+func (m *TargetModel) License(_ domain.Apper) bool {
 	return true
 }

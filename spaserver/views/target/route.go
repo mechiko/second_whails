@@ -135,7 +135,7 @@ func (t *page) toStatus(c echo.Context) error {
 	if err != nil {
 		return fmt.Errorf("target page model update %w", err)
 	}
-	modelMenu, err := reductor.Model[*menu.MenuModel](domain.Menu)
+	modelMenu, err := reductor.Model[*menu.MenuModel](domain.Menu, t)
 	if err != nil {
 		return fmt.Errorf("%w", err)
 	}

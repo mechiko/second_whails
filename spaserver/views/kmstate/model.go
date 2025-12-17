@@ -90,6 +90,6 @@ func (a *KmStateModel) Save(_ domain.Apper) (err error) {
 }
 
 // всегда возвращает true означает проверки нет всегда ок
-func (m *KmStateModel) License() bool {
+func (m *KmStateModel) License(_ domain.Apper) bool {
 	return true
 }

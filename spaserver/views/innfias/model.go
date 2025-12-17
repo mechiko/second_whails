@@ -67,6 +67,6 @@ func (a *InnFiasModel) Save(_ domain.Apper) (err error) {
 }
 
 // всегда возвращает true означает проверки нет всегда ок
-func (m *InnFiasModel) License() bool {
+func (m *InnFiasModel) License(_ domain.Apper) bool {
 	return true
 }

@@ -10,7 +10,7 @@
       "preLaunchTask": "build",
       "args": [
         "-local",
-        "-dontconnect"
+        // "-dontconnect"
       ],
       "cwd": "${workspaceFolder}/cmd"
     },
@@ -36,7 +36,7 @@
       "preLaunchTask": "build dev",
       "args": [
         "-local",
-        "-dontconnect"
+        // "-dontconnect"
       ],
       "cwd": "${workspaceFolder}/cmd"
     }

@@ -15,7 +15,7 @@ func (t *page) info(cis string) error {
 	if err != nil {
 		return fmt.Errorf("%w", err)
 	}
-	mtcl, err := reductor.Model[*modeltrueclient.TrueClientModel](domain.TrueClient)
+	mtcl, err := reductor.Model[*modeltrueclient.TrueClientModel](domain.TrueClient, t)
 	if err != nil {
 		return fmt.Errorf("%w", err)
 	}

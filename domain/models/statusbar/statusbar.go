@@ -54,6 +54,6 @@ func (a *StatusBar) Save(_ domain.Apper) (err error) {
 }
 
 // всегда возвращает true означает проверки нет всегда ок
-func (m *StatusBar) License() bool {
+func (m *StatusBar) License(_ domain.Apper) bool {
 	return true
 }

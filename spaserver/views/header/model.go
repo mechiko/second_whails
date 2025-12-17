@@ -82,6 +82,6 @@ func (a *HeaderModel) ActiveTitle() string {
 }
 
 // всегда возвращает true означает проверки нет всегда ок
-func (m *HeaderModel) License() bool {
+func (m *HeaderModel) License(_ domain.Apper) bool {
 	return true
 }
