@@ -49,8 +49,7 @@ func (l *Licenser) startDialog() (out string, err error) {
 								Text:     encoded64,
 							},
 							dcl.PushButton{
-								AssignTo: &acceptPB,
-								Text:     "Copy",
+								Text: "Copy",
 								OnClicked: func() {
 									clipboard.Write(clipboard.FmtText, []byte(encoded64))
 									// walk.Clipboard().SetText(encoded64)
@@ -72,8 +71,7 @@ func (l *Licenser) startDialog() (out string, err error) {
 								Text:     "",
 							},
 							dcl.PushButton{
-								AssignTo: &acceptPB,
-								Text:     "Paste",
+								Text: "Paste",
 								OnClicked: func() {
 									data := clipboard.Read(clipboard.FmtText)
 									if data == nil {
