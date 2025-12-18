@@ -248,7 +248,7 @@ func StartDialog(app domain.Apper, model *modeltrueclient.TrueClientModel) error
 		omsID.SetEnabled(false)
 	}
 	if ret := dlg.Run(); ret != 1 {
-		return fmt.Errorf("dialog return %d", ret)
+		return fmt.Errorf("отменено пользователем")
 	}
 	// if userClose {
 	// 	return fmt.Errorf("dialog user close")

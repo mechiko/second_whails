@@ -16,7 +16,7 @@ type KmStateModel struct {
 	CisIn               []string        // список CIS для запроса
 	Chunks              int             // куски
 	CisOut              domain.CisSlice // список CIS полученных
-	CisStatus           map[string]map[string]int
+	CisStatus           map[string]map[string]map[string]domain.CisSlice
 	ExcelChunkSize      int  // размер куска для выгрузки в файл ексель
 	IsConnectedTrueZnak bool // есть подключение к ЧЗ
 	IsTrueZnakA3        bool // подключена БД ЧЗ А3
@@ -90,6 +90,6 @@ func (a *KmStateModel) Save(_ domain.Apper) (err error) {
 }
 
 // всегда возвращает true означает проверки нет всегда ок
-func (m *KmStateModel) License() bool {
+func (m *KmStateModel) License(_ domain.Apper) bool {
 	return true
 }

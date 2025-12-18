@@ -10,7 +10,7 @@ import (
 
 // при запуске программы первый пинг блокирующий для проверки
 func (s *Server) PingSetup() error {
-	mdl, err := reductor.Model[*modeltrueclient.TrueClientModel](domain.TrueClient)
+	mdl, err := reductor.Model[*modeltrueclient.TrueClientModel](domain.TrueClient, s)
 	if err != nil {
 		return fmt.Errorf("failed to create trueclient: %w", err)
 	}

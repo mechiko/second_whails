@@ -6,13 +6,13 @@ import (
 )
 
 func (t *page) PageData() (interface{}, error) {
-	return reductor.Model[*InnFiasModel](t.modelType)
+	return reductor.Model[*InnFiasModel](t.modelType, t)
 }
 
 // с преобразованием
 func (t *page) PageModel() (model *InnFiasModel, err error) {
 	// model, err := reductor.Instance().Model(t.modelType)
-	model, err = reductor.Model[*InnFiasModel](t.modelType)
+	model, err = reductor.Model[*InnFiasModel](t.modelType, t)
 	if err != nil {
 		return &InnFiasModel{}, fmt.Errorf("%w", err)
 	}

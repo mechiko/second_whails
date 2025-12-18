@@ -7,7 +7,7 @@ import (
 	"github.com/mechiko/utility"
 )
 
-func Model[T domain.Modeler](src domain.Model) (T, error) {
+func Model[T domain.Modeler](src domain.Model, app domain.Apper) (T, error) {
 	var resultNil T
 	if instance == nil {
 		return resultNil, fmt.Errorf("reductor not init")
@@ -25,8 +25,8 @@ func Model[T domain.Modeler](src domain.Model) (T, error) {
 				return resultNil, fmt.Errorf("reductor clone model %w", err)
 			}
 			// добавим проверку Licenser
-			if !returnModel.License() {
-				return resultNil, fmt.Errorf("reductor license model %w", err)
+			if !returnModel.License(app) {
+				return resultNil, fmt.Errorf("ошибка лицензии, перезапустите программу")
 			}
 			return returnModel, nil
 		}

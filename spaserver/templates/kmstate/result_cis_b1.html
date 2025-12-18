@@ -1,0 +1,7 @@
+<button 
+  class="lll focus:shadow-outline rounded-md border-2 border-gray-500 px-1 py-0.5 font-medium text-gray-900 hover:bg-gray-700 hover:text-white focus:outline-none"
+  hx-indicator="#ind1" hx-post="/kmstate/excelex" hx-vals='{"status": "{{.Status}}","statusex": "{{.StatusEx}}", "produced": "{{.ProducedDate}}"}'
+  hx-trigger="click" hx-target="#excel-result" hx-swap="innerHTML">
+  Выгрузить
+</button>
+

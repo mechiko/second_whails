@@ -2,8 +2,10 @@ package spaserver
 
 import (
 	"fmt"
+	"korrectkm/spaserver/views/adjust"
 	"korrectkm/spaserver/views/cisinfo"
 	"korrectkm/spaserver/views/footer"
+	"korrectkm/spaserver/views/gtin"
 	"korrectkm/spaserver/views/header"
 	"korrectkm/spaserver/views/home"
 	"korrectkm/spaserver/views/innfias"
@@ -11,10 +13,11 @@ import (
 	"korrectkm/spaserver/views/menu"
 	"korrectkm/spaserver/views/money"
 	"korrectkm/spaserver/views/root"
+	"korrectkm/spaserver/views/target"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/mechiko/walk"
+	"golang.design/x/clipboard"
 )
 
 // маршрутизация приложения
@@ -91,6 +94,21 @@ func (s *Server) loadViews() {
 	s.views[view9.ModelType()] = view9
 	view9.Routes()
 	view9.InitData(s)
+	// Adjust
+	view10 := adjust.New(s)
+	s.views[view10.ModelType()] = view10
+	view10.Routes()
+	view10.InitData(s)
+	// Target
+	view11 := target.New(s)
+	s.views[view11.ModelType()] = view11
+	view11.Routes()
+	view11.InitData(s)
+	// Gtin
+	view12 := gtin.New(s)
+	s.views[view12.ModelType()] = view12
+	view12.Routes()
+	view12.InitData(s)
 	// header инициализируем последним нужны все виды сервера в списке
 	view1.InitData(s)
 	view6.InitData(s)
@@ -108,7 +126,8 @@ func (s *Server) Index(c echo.Context) error {
 
 func (s *Server) copy(c echo.Context) error {
 	value := c.Param("value")
-	walk.Clipboard().SetText(value)
+	clipboard.Write(clipboard.FmtText, []byte(value))
+	// walk.Clipboard().SetText(value)
 	// s.SetFlush("инфо", fmt.Sprintf("значение %s скопировано", value))
 	s.SetFlush("скопировано в буфер значение "+value, "info")
 	return c.String(200, "")

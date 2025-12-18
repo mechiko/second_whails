@@ -1,0 +1,9 @@
+{{if not $.Updated.IsZero}}
+<div class="m-1">Обновлено {{ddmmyyhhmmss $.Updated}}</div>
+<div>Получено: {{len $.TargetCis}} КМ</div>
+<button 
+  class="focus:shadow-outline rounded-md border-2 border-gray-500 px-1 py-0.5 font-medium text-gray-900 hover:bg-gray-700 hover:text-white focus:outline-none" 
+  hx-get="/target/tostatus" hx-trigger="click" hx-target="this" hx-swap="none">
+  Опросить КМ
+</button>
+{{end}}

@@ -35,12 +35,12 @@ func (t *page) InitData(_ domain.Apper) (interface{}, error) {
 }
 
 func (t *page) PageData() (interface{}, error) {
-	return reductor.Model[*MenuModel](t.modelType)
+	return reductor.Model[*MenuModel](t.modelType, t)
 }
 
 // с преобразованием
 func (t *page) PageModel() (model *MenuModel, err error) {
-	model, err = reductor.Model[*MenuModel](t.modelType)
+	model, err = reductor.Model[*MenuModel](t.modelType, t)
 	if err != nil {
 		return &MenuModel{}, fmt.Errorf("%w", err)
 	}

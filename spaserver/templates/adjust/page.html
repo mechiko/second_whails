@@ -1,0 +1,9 @@
+<div id="adjust" class="p-2 w-full">
+  <div>Корректировка КМ</div>
+{{if len $.CisIn}}
+{{ template "process_cis" . }}
+{{else}}
+{{ template "select_cis" . }}
+{{end}}
+{{ template "adjust" . }}
+</div>

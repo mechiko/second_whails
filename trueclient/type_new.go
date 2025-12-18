@@ -32,7 +32,7 @@ func New(a domain.Apper) (s *trueClient, err error) {
 
 	// при запуске программы модель должна быть инициализирована
 	// здесь мы уже получаем ее существующую
-	model, err := reductor.Model[*modeltrueclient.TrueClientModel](domain.TrueClient)
+	model, err := reductor.Model[*modeltrueclient.TrueClientModel](domain.TrueClient, a)
 	if err != nil {
 		return nil, fmt.Errorf("%w", err)
 	}

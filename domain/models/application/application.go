@@ -146,6 +146,6 @@ func (m *Application) Save(app domain.Apper) (err error) {
 }
 
 // всегда возвращает true означает проверки нет всегда ок
-func (m *Application) License() bool {
+func (m *Application) License(_ domain.Apper) bool {
 	return true
 }

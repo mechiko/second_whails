@@ -14,7 +14,7 @@
       </thead>
       <tbody>
 {{range $i, $b := $.InnInfo.Result}}
-      <tr class="text-base">
+      <tr class="text-base select-text">
         <td class="pl-1 text-sm border text-left">{{$b.Inn}}<BR>{{$b.Kpp}}</td>
         <td class="pl-1 text-sm border">
           <div class="flex items-center justify-center">{{$b.FiasID}} {{ template "copy" $b.FiasID }}</div>

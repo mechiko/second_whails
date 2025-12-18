@@ -68,6 +68,6 @@ func (a *MoneyModel) Save(_ domain.Apper) (err error) {
 }
 
 // всегда возвращает true означает проверки нет всегда ок
-func (m *MoneyModel) License() bool {
+func (m *MoneyModel) License(_ domain.Apper) bool {
 	return true
 }

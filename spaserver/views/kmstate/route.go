@@ -21,7 +21,10 @@ func (t *page) Routes() error {
 	t.Echo().GET(base+"/reset", t.Reset)
 	t.Echo().GET(base+"/progress", t.progress)
 	t.Echo().GET(base+"/search", t.search)
-	t.Echo().GET(base+"/excel/:status/:statusex", t.excel)
+	// t.Echo().GET(base+"/excel/:status/:statusex", t.excel)
+	t.Echo().POST(base+"/excelst", t.excelStatus)
+	t.Echo().POST(base+"/excelpr", t.excelProduceDate)
+	t.Echo().POST(base+"/excelex", t.excelEx)
 	t.Echo().POST(base+"/orderload", t.orderLoad)
 	t.Echo().POST(base+"/utilload", t.utilLoad)
 	t.Echo().POST(base+"/atkload", t.atkLoad)
@@ -121,9 +124,10 @@ func (t *page) search(c echo.Context) error {
 	return nil
 }
 
-func (t *page) excel(c echo.Context) error {
-	status := c.Param("status")
-	statusEx := c.Param("statusex")
+func (t *page) excelEx(c echo.Context) error {
+	status := c.FormValue("status")
+	statusEx := c.FormValue("statusex")
+	produced := c.FormValue("produced")
 	file, err := utility.DialogSaveFile(utility.Excel, "", ".")
 	if err != nil {
 		return t.ServerError(c, err)
@@ -133,22 +137,102 @@ func (t *page) excel(c echo.Context) error {
 	if err != nil {
 		return t.ServerError(c, err)
 	}
-	allcis := data.CisOut
-	arrStatus := make([]string, 0)
-	for _, cis := range allcis {
-		if (cis.Status == status) && (cis.StatusEx == statusEx) {
-			arrStatus = append(arrStatus, cis.Cis)
-		}
+	arrStatus, exist := data.CisStatus[status][produced][statusEx]
+	if !exist {
+		return t.ServerError(c, errors.New("параметры заданы неверно"))
 	}
 	size := data.ExcelChunkSize
 	if size <= 0 {
 		size = 30000
 	}
-	fNames, err := t.ToExcel(arrStatus, file, size)
+	result := make([]string, len(arrStatus))
+	for i, s := range arrStatus {
+		result[i] = s.Cis
+	}
+	fNames, err := t.ToExcel(result, file, size)
 	if err != nil {
 		return t.ServerError(c, err)
 	}
 	msg := fmt.Sprintf("записано %d КМ в %d файл(а,ов)", len(arrStatus), len(fNames))
+	t.SetFlush(msg, "info")
+	// возвращаем имя файла для отображения на форме
+	// out := fmt.Sprintf("записано %d кодов маркировки %d файлов", len(arrStatus), len(fNames))
+	// c.String(200, out)
+	c.NoContent(204)
+	return nil
+}
+
+func (t *page) excelProduceDate(c echo.Context) error {
+	status := c.FormValue("status")
+	produced := c.FormValue("produced")
+	file, err := utility.DialogSaveFile(utility.Excel, "", ".")
+	if err != nil {
+		return t.ServerError(c, err)
+	}
+	file = fmt.Sprintf("%s_%s", file, status)
+	data, err := t.PageModel()
+	if err != nil {
+		return t.ServerError(c, err)
+	}
+	mapStatus, exist := data.CisStatus[status][produced]
+	if !exist {
+		return t.ServerError(c, errors.New("параметры заданы неверно"))
+	}
+	size := data.ExcelChunkSize
+	if size <= 0 {
+		size = 30000
+	}
+	result := make([]string, 0)
+	for _, date := range mapStatus {
+		for _, ex := range date {
+			result = append(result, ex.Cis)
+		}
+	}
+	fNames, err := t.ToExcel(result, file, size)
+	if err != nil {
+		return t.ServerError(c, err)
+	}
+	msg := fmt.Sprintf("записано %d КМ в %d файл(а,ов)", len(result), len(fNames))
+	t.SetFlush(msg, "info")
+	// возвращаем имя файла для отображения на форме
+	// out := fmt.Sprintf("записано %d кодов маркировки %d файлов", len(arrStatus), len(fNames))
+	// c.String(200, out)
+	c.NoContent(204)
+	return nil
+}
+
+func (t *page) excelStatus(c echo.Context) error {
+	status := c.FormValue("status")
+	file, err := utility.DialogSaveFile(utility.Excel, "", ".")
+	if err != nil {
+		return t.ServerError(c, err)
+	}
+	file = fmt.Sprintf("%s_%s", file, status)
+	data, err := t.PageModel()
+	if err != nil {
+		return t.ServerError(c, err)
+	}
+	mapStatus, exist := data.CisStatus[status]
+	if !exist {
+		return t.ServerError(c, errors.New("параметры заданы неверно"))
+	}
+	size := data.ExcelChunkSize
+	if size <= 0 {
+		size = 30000
+	}
+	result := make([]string, 0)
+	for _, st := range mapStatus {
+		for _, date := range st {
+			for _, ex := range date {
+				result = append(result, ex.Cis)
+			}
+		}
+	}
+	fNames, err := t.ToExcel(result, file, size)
+	if err != nil {
+		return t.ServerError(c, err)
+	}
+	msg := fmt.Sprintf("записано %d КМ в %d файл(а,ов)", len(result), len(fNames))
 	t.SetFlush(msg, "info")
 	// возвращаем имя файла для отображения на форме
 	// out := fmt.Sprintf("записано %d кодов маркировки %d файлов", len(arrStatus), len(fNames))

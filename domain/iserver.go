@@ -11,4 +11,5 @@ type IServer interface {
 	SetActivePage(Model)
 	SetFlush(string, string)
 	RenderString(name string, data interface{}) (str string, err error)
+	Reload()
 }

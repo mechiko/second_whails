@@ -5,12 +5,12 @@ import (
 )
 
 func (t *page) PageData() (interface{}, error) {
-	return reductor.Model[*HomeModel](t.modelType)
+	return reductor.Model[*HomeModel](t.modelType, t)
 }
 
 // с преобразованием
 func (t *page) PageModel() HomeModel {
-	model, _ := reductor.Model[*HomeModel](t.modelType)
+	model, _ := reductor.Model[*HomeModel](t.modelType, t)
 	return *model
 }
 

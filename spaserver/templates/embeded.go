@@ -4,5 +4,5 @@ import (
 	"embed"
 )
 
-//go:embed header footer home root kmstate
+//go:embed *
 var root embed.FS

@@ -82,6 +82,6 @@ func (a *MenuModel) ActiveTitle() string {
 }
 
 // всегда возвращает true означает проверки нет всегда ок
-func (m *MenuModel) License() bool {
+func (m *MenuModel) License(_ domain.Apper) bool {
 	return true
 }
