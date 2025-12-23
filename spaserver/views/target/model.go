@@ -33,7 +33,7 @@ func NewModel(app domain.Apper) (*TargetModel, error) {
 		Filter: domain.TargetFilter{
 			Pagination: domain.FilterPagination{
 				PerPage:          1000,
-				LastEmissionDate: "2025-12-10T22:00:00.000Z",
+				LastEmissionDate: time.Now().Format(domain.TargetDateLayout),
 				Direction:        0,
 				Sgtin:            "000000000000000000000",
 			},

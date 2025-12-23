@@ -18,21 +18,25 @@ func (z *DbZnak) fetchAndParseCodes(collection string, field string, value inter
 		return nil, err
 	}
 	mpCheck := map[string]bool{}
-	out = make([]string, len(codes))
-	for i, code := range codes {
+	out = make([]string, 0)
+	for _, code := range codes {
 		c, ok := code["code"].(string)
 		if !ok {
 			return nil, fmt.Errorf("%v not string %T", code["code"], code["code"])
 		}
+		if c == "" {
+			fmt.Printf("empty code for %s id=%d order=%d\n", collection, code["id"], code["id_order_mark_codes"])
+			continue
+		}
 		cis, err := utility.ParseCisInfo(c)
 		if err != nil {
-			return nil, fmt.Errorf("parse cis error %w", err)
+			return nil, fmt.Errorf("parse cis [%s] error %w", c, err)
 		}
 		if _, exist := mpCheck[cis.Cis]; exist {
 			return nil, fmt.Errorf("дубль %s заказ %v", cis.Cis, code["id_order_mark_codes"])
 		}
 		mpCheck[cis.Cis] = true
-		out[i] = cis.Cis
+		out = append(out, cis.Cis)
 	}
 	return out, nil
 }
