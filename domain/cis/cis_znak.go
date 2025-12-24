@@ -89,14 +89,14 @@ func trimPrefixFNC1(code string) string {
 }
 
 // парсим полный код без FNC1 в поля
-const minCisLenght = 25
+const minCisLenght = 23
 
 func TrimCis(code string) (string, error) {
 	// минимальная длина без FNC1 - 01 GTIN(14) 21 Country(1) Serial(6)
 	// 25 символов без ФНС1 для серийного номера 6 знаков
 	code = trimPrefixFNC1(code)
 	if len(code) < minCisLenght {
-		return "", fmt.Errorf("%d less then min lenght cis 25", len(code))
+		return "", fmt.Errorf("%d less then min lenght cis %d", len(code), minCisLenght)
 	}
 	index := strings.IndexByte(code, '\x1D')
 	if index > 0 {

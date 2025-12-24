@@ -244,3 +244,7 @@ func (a *app) Wails() *application.App {
 func (a *app) SetWails(appw *application.App) {
 	a.App = appw
 }
+
+func (a *app) Debug() bool {
+	return config.Mode == "development"
+}
