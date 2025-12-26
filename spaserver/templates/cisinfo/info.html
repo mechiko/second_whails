@@ -1,6 +1,7 @@
 {{if not $.Updated.IsZero}}
 <div class="m-1">Обновлено {{ddmmyyhhmmss $.Updated}}</div>
 <div class="h-[calc(100vh-10rem)] overflow-y-auto w-full text-xs">
-<pre>{{$.Json}}</pre>
+<span class="font-bold text-base">Товарная группа: {{index $.MapInfo "Товарная группа"}}</span>
+<pre class="select-text">{{$.Json}}</pre>
 </div>
 {{end}}
