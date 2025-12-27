@@ -92,6 +92,8 @@ func (t *page) Search() {
 			if cisItem.Result.ProducedDate.IsZero() {
 				producedDate = "отсутствует"
 			}
+			// пробовал группировку по товарной группе
+			// producedDate := fmt.Sprintf("%s[%d]", cisItem.Result.ProductGroup, cisItem.Result.ProductGroupID)
 			status := domain.StatusNameByAlias[strings.ToLower(cisItem.Result.Status)]
 			if status == "" {
 				status = strings.ToLower(cisItem.Result.Status)

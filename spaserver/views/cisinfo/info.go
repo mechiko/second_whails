@@ -7,6 +7,7 @@ import (
 	"korrectkm/domain/models/modeltrueclient"
 	"korrectkm/reductor"
 	"korrectkm/trueclient"
+	"strings"
 	"time"
 )
 
@@ -42,6 +43,13 @@ func (t *page) info(cis string) error {
 		if len(respMap) > 0 {
 			data.MapInfo = respMap[0]
 		}
+		if data.CisInfo.ProductGroup != "" {
+			if name, exist := domain.ProductGroupByAlias[strings.ToLower(data.CisInfo.ProductGroup)]; exist {
+				data.CisInfo.ProductGroupName = name.Name
+				data.MapInfo["Товарная группа"] = name.Name
+			}
+		}
+		// data.MapInfo["pg"] = domain.ProductGroupByAlias[]
 		prettyJSON, err := json.MarshalIndent(data.MapInfo, "", "    ") // 4 spaces for indent
 		if err != nil {
 			return fmt.Errorf("%w", err)

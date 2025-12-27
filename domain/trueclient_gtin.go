@@ -15,6 +15,7 @@ type GtinInfo struct {
 	Inn                      string `json:"inn"`
 	ProductGroupID           int    `json:"productGroupId"`
 	ProductGroup             string `json:"productGroup"`
+	ProductGroupName         string `json:"Товарная группа"`
 	GoodSignedFlag           bool   `json:"goodSignedFlag"`
 	GoodMarkFlag             bool   `json:"goodMarkFlag"`
 	GoodTurnFlag             bool   `json:"goodTurnFlag"`

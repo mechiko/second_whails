@@ -80,6 +80,7 @@ type CisResult struct {
 	EmissionType        string        `json:"emissionType"`
 	ConnectDate         time.Time     `json:"connectDate"`
 	ProductGroup        string        `json:"productGroup"`
+	ProductGroupName    string        `json:"productGroupName"`
 	ProductGroupID      int           `json:"productGroupId"`
 	ExtendedPackageType string        `json:"extendedPackageType"`
 	ProducedDate        time.Time     `json:"producedDate"`

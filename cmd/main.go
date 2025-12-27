@@ -229,7 +229,7 @@ func main() {
 	}
 
 	// тут инициализируются так же модели для всех видов
-	httpServer := spaserver.New(app, echoLogger, port, true)
+	httpServer := spaserver.New(app, echoLogger, port, app.Debug())
 	httpServer.SetActivePage(domain.KMState)
 	// запускаем сервер эхо через него SSE работает для флэш сообщений
 	httpServer.Start()

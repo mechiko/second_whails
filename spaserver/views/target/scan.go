@@ -49,6 +49,12 @@ func (t *page) scan() (err error) {
 		if err := tc.TargetFilterPost(&dataTarget, data.Filter); err != nil {
 			return fmt.Errorf("%w", err)
 		}
+		if len(dataTarget.Result) == 0 {
+			if dataTarget.IsLastPage {
+				break
+			}
+			return fmt.Errorf("результат 0")
+		}
 		for _, rec := range dataTarget.Result {
 			out := domain.TargetCis{Result: rec}
 			// cises[rec.Cis] = out
@@ -63,6 +69,7 @@ func (t *page) scan() (err error) {
 		}
 		page++
 		data.Progress = page
+		t.ModelUpdate(data)
 	}
 	if len(data.TargetCis) > 0 {
 		cisStatus := make(map[string][]domain.TargetCis)

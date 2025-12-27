@@ -7,6 +7,7 @@ import (
 	"korrectkm/domain/models/modeltrueclient"
 	"korrectkm/reductor"
 	"korrectkm/trueclient"
+	"strings"
 	"time"
 )
 
@@ -32,6 +33,11 @@ func (t *page) info(gtin string) error {
 		data.Info = infoResult.Results[0]
 	} else {
 		return fmt.Errorf("результат пустой %s", infoResult.ErrorCode)
+	}
+	if data.Info.ProductGroup != "" {
+		if name, exist := domain.ProductGroupByAlias[strings.ToLower(data.Info.ProductGroup)]; exist {
+			data.Info.ProductGroupName = name.Name
+		}
 	}
 	data.Updated = time.Now()
 	prettyJSON, err := json.MarshalIndent(data.Info, "", "    ") // 4 spaces for indent

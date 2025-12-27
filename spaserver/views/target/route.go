@@ -49,7 +49,7 @@ func (t *page) Reset(c echo.Context) error {
 func (t *page) Scan(c echo.Context) error {
 	gtin := c.FormValue("gtin")
 	pg := c.FormValue("pg")
-	data, err := t.PageModel()
+	data, err := NewModel(t)
 	if err != nil {
 		return t.ServerError(c, err)
 	}
@@ -62,6 +62,7 @@ func (t *page) Scan(c echo.Context) error {
 		{Status: "APPLIED"},
 	}
 	data.Filter.Pagination.PerPage = 1000
+	data.Filter.Pagination.LastEmissionDate = time.Now().Format(domain.TargetDateLayout)
 	if data.IsProgress {
 		// уже запущена операция
 		// return c.NoContent(204)

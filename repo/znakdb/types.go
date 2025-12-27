@@ -7,13 +7,12 @@ import (
 	"korrectkm/dbscan"
 
 	"github.com/upper/db/v4"
-	"go.uber.org/zap"
 )
 
 const modError = "selfdb"
 
 type DbZnak struct {
-	logger    *zap.SugaredLogger
+	// logger    *zap.SugaredLogger
 	dbSession db.Session // открытый хэндл тут
 	dbInfo    *dbscan.DbInfo
 	infoType  dbscan.DbInfoType
